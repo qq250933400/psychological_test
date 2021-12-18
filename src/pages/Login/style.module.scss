@@ -1,0 +1,54 @@
+.login {
+    display: block;
+    height: 100%;
+    position: relative;
+    background: #44a6f7;
+    padding-top: 1px;
+}
+.loginTitle {
+    display: block;
+    max-width: 80%;
+    margin: 0 auto;
+    margin-top: 15%;
+}
+.loginLogo {
+    display: block;
+    margin: 0 auto;
+    margin-top: 3rem;
+    max-width: 70%;
+}
+.loginInputArea {
+    display: block;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+.verifyCode {
+    margin-top: 1rem;
+}
+.loginButton {
+    display: block;
+    margin: 0 auto;
+    margin-top: 3rem;
+    width: 60%;
+    height: 2.4rem;
+    background: #ffdf00;
+    border-radius: 3px;
+    border: none;
+    outline: none;
+    color: #0279ff;
+    font-size: 1.1rem;
+    &:active {
+        background: #cfb507;
+    }
+}
+.loginCopyRight {
+    display: block;
+    margin-top: 2.5rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color:#2b2b2b;
+    span {
+        display: block;
+    }
+}

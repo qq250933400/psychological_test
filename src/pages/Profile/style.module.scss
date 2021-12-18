@@ -1,0 +1,65 @@
+.profilePage {
+    padding-top: 1px;
+    .profileCard {
+        display: inline-block;
+        background:#d1ecfe;
+        position: relative;
+        border-radius:8px;
+        overflow: hidden;
+        width: 70vw;
+        >div {
+            display: block;
+            padding: 3.5rem 0;
+            img {
+                display: block;
+                width: 80%;
+                margin: 0 auto;
+                border-radius: 100%;
+            }
+        }
+        >label {
+            display: block;
+            height: 4rem;
+            line-height: 4rem;
+            text-align: center;
+            font-size: 1.8rem;
+            color:#0ab6ff;
+            background:#ffffff;
+            box-shadow:0 2px 4px 0 rgba(238,238,238,0.50);
+        }
+    }
+    .cards {
+        display: block;
+        width: 70vw;
+        margin: 0 auto;
+        margin-top: 2rem;
+        white-space: nowrap;
+        overflow: hidden;
+        border-radius:8px;
+    }
+}
+.btnStart {
+    display: block;
+    width: 40vw;
+    margin: 0 auto;
+    margin-top: 3rem;
+    height: 3rem;
+    border-radius: 1.5rem;
+    background: transparent;
+    border: 1px solid #ffffff;
+    color: #fff;
+    font-size: 1.4rem;
+    &:active {
+        background: rgba(255,255,255,.2);
+    }
+}
+.profileLoading {
+    text-align: center;
+    font-size: 1.8rem;
+    padding-top: 20vh;
+    >span {
+        font-size: 1.1rem;
+        color: #fff;
+        vertical-align: middle;
+    }
+}

@@ -1,0 +1,80 @@
+.withFramePage {
+    display: block;
+    height: 100%;
+    position: relative;
+    background: #44a6f7;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: '微软雅黑';
+    >header {
+        height: 3rem;
+        padding-left: 3rem;
+        padding-right: 3rem;
+        .btnHome,
+        .btnHistory,
+        .btnRetry,
+        .btnCancel {
+            display: block;
+            height: 1.8rem;
+            width: 1.8rem;
+            background: url(../../res/home.png) no-repeat;
+            background-size:contain;
+            border: none;
+            outline: 0;
+            appearance: none;
+            position: absolute;
+            left: .5rem;
+            top: .5rem;
+            color: #fff;
+        }
+        .btnHistory,
+        .btnRetry {
+            right: .5rem;
+            left: auto;
+            background: url(../../res/history.png) no-repeat;
+            background-size: contain;
+        }
+        .btnRetry,
+        .btnCancel {
+            background: transparent;
+            width: auto;
+        }
+        >span {
+            display: block;
+            height: 3rem;
+            line-height: 3rem;
+            text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+    }
+    .withFramePageContent {
+        display: block;
+        height: -webkit-calc(100% - 3rem);
+        height: -moz-calc(100% - 3rem);
+        height: -ms-calc(100% - 3rem);
+        height: calc(100% - 3rem);
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+    .fullLoading {
+        text-align: center;
+        font-size: 1.8rem;
+        padding-top: 20vh;
+        >span {
+            font-size: 1.1rem;
+            color: #fff;
+            vertical-align: middle;
+        }
+    }
+    .exception {
+        color: #fff;
+        background: transparent;
+        [class*="adm-result-title"] {
+            color: #fff;
+        }
+    }
+}

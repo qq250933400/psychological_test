@@ -1,0 +1,52 @@
+.lineInput {
+    display: block;
+    >div {
+        display:flex;
+        font-size: 1.0rem;
+        color: #fff;
+        .lineInputLabel {
+            flex: 0 0 4rem;
+            padding-right: .8rem;
+            text-align: left;
+            height: 2rem;
+            line-height: 2rem;
+        }
+        .lineInputBox {
+            flex: auto;
+            height: 2rem;
+            border-bottom: 1px solid #fff;
+            input {
+                width: 100%;
+                box-sizing: border-box;
+                height: 2rem;
+                background: transparent;
+                border: none;
+                outline: none;
+                color: #fff;
+                font-size: 1.2rem;
+            }
+        }
+        .verifyCodeInput {
+            position: relative;
+            button {
+                position: absolute;
+                right: 0;
+                top: 0;
+                height: 1.8rem;
+                border: 0;
+                color: #fff;
+                appearance: none;
+                background: transparent;
+                font-weight: bolder;
+                &:disabled {
+                    color: #B7B7BD;
+                }
+            }
+            input {
+                width: -webkit-calc(100% - 80px);
+                width: -ms-calc(100% - 80px);
+                width: calc(100% - 80px);
+            }
+        }
+    }
+}

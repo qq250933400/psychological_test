@@ -1,0 +1,36 @@
+.test {
+    display: block;
+    padding: 1rem;
+    padding-top: 2rem;
+    ul,ul li {
+        display: block;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    ul {
+        li {
+            padding: .8rem;
+            border-radius: 8px;
+            background: #d1ebfe;
+            margin-top: .8rem;
+            padding-left: 2.6rem;
+            position: relative;
+            &::before {
+                display: block;
+                content: "";
+                width: 1.6rem;
+                height: 1.6rem;
+                background: url(../../res/question.png) no-repeat;
+                background-size: contain;
+                position: absolute;
+                left: .6rem;
+                top: 50%;
+                margin-top: -.8rem;
+            }
+        }
+        li:first-child {
+            margin-top: 0;
+        }
+    }
+}
