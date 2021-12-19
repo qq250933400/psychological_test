@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useState } from 'react';
 import { TypeServiceConfig, createServiceConfig, ElmerService, TypeServiceSendOptions } from "./ElmerService";
 import { getServiceObj } from "elmer-common/lib/decorators/Autowired";
 import { commonHandler } from "./ErrorHandle";
+import { useNavigate } from "react-router-dom";
 
 type TypeServiceProviderProps = {
     env: string,
@@ -39,9 +40,13 @@ const withService = () => {
             const [ serviceObj ] = useState(() => {
                 return getServiceObj(ElmerService) as ElmerService;
             });
+            const navigateTo = useNavigate();
             const sendRequest = useCallback((option: TypeServiceSendOptions, opt?: TypeServiceRequestOptions) =>{
                 return new Promise((resolve, reject) => {
                     const token = sessionStorage.getItem("token");
+                    const handleEvent:any = {
+                        throwException: opt?.throwException
+                    };
                     serviceObj.send({
                         ...option,
                         cookie: {
@@ -49,29 +54,31 @@ const withService = () => {
                             token
                         }
                     }).then((resp: any) => {
-                            if(!commonHandler(resp, false, {
-                                throwException: opt?.throwException,
-                                onError: (err) => {
-                                    reject({
-                                        ...resp,
-                                        statusCode: err.statusCode,
-                                        message: err.message
-                                    });
-                                }
-                            })) {
+                            handleEvent.onError = (err:any) => {
+                                reject({
+                                    ...resp,
+                                    statusCode: err.statusCode,
+                                    message: err.message
+                                });
+                            }
+                            if(!commonHandler(resp, false, handleEvent)) {
                                 resolve(resp.data);
                             }
+                            if(handleEvent.returnValue?.statusCode === "NoLogin") {
+                                navigateTo("/login");
+                            }
                         }).catch((err) => {
-                            commonHandler(err, true, {
-                                throwException: opt?.throwException,
-                                onError: (errx) => {
-                                    reject({
-                                        ...err,
-                                        statusCode: errx.statusCode,
-                                        message: errx.message
-                                    });
-                                }
-                            });
+                            handleEvent.onError = (errx:any) => {
+                                reject({
+                                    ...err,
+                                    statusCode: errx.statusCode,
+                                    message: errx.message
+                                });
+                            };
+                            commonHandler(err, true, handleEvent);
+                            if(handleEvent.returnValue?.statusCode === "NoLogin") {
+                                navigateTo("/login");
+                            }
                             reject(err);
                         });
                 });

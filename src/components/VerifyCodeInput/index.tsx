@@ -10,6 +10,7 @@ type TypeLineInputProps = {
     onChange?: Function;
     onBeforeSend():Promise<any>;
     maxLength?: number;
+    defaultValue?: string;
 };
 
 const VerifyCodeInput = (props: TypeLineInputProps) => {
@@ -58,7 +59,7 @@ const VerifyCodeInput = (props: TypeLineInputProps) => {
             <div>
                 <label className={styles.lineInputLabel}>{props.label}</label>
                 <div className={utils.cn(styles.lineInputBox, styles.verifyCodeInput)} >
-                    <input maxLength={props.maxLength} type={props.type || "text"} onChange={onChange}/>
+                    <input defaultValue={props.defaultValue || ""} maxLength={props.maxLength} type={props.type || "text"} onChange={onChange}/>
                     <button {...sendProps} onClick={onSendClick}>{ sendButtonText}</button>
                 </div>
             </div>

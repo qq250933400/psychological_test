@@ -6,6 +6,7 @@ type TypeLineInputProps = {
     type?: "text" | "number" | "mobile" | "password";
     onChange?: Function;
     maxLength?: number;
+    defaultValue?: string;
 };
 
 const LineInput = (props: TypeLineInputProps) => {
@@ -35,7 +36,7 @@ const LineInput = (props: TypeLineInputProps) => {
             <div>
                 <label className={styles.lineInputLabel}>{props.label}</label>
                 <div className={styles.lineInputBox} >
-                    <input onKeyDown={onKeydown as any} maxLength={props.maxLength} type={props.type || "text"} onChange={onChange}/>
+                    <input defaultValue={props.defaultValue || ""} onKeyDown={onKeydown as any} maxLength={props.maxLength} type={props.type || "text"} onChange={onChange}/>
                 </div>
             </div>
         </div>

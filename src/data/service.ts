@@ -27,6 +27,10 @@ export default createServiceConfig({
                 question: {
                     url: "/wenjuan/users/question",
                     method: "POST"
+                },
+                submitTest: {
+                    url: "/wenjuan/question/submit/test",
+                    method: "POST"
                 }
             }
         }

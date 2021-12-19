@@ -9,8 +9,8 @@ import withService, { TypeService  } from "../../HOC/withService";
 
 
 const Login = (props: any) => {
-    const [ userName, setUserName ] = useState("");
-    const [ verifyCode, setVerifyCode ] = useState("");
+    const [ userName, setUserName ] = useState("18924290704");
+    const [ verifyCode, setVerifyCode ] = useState("22111");
 
     const service: TypeService = props.service;
 
@@ -42,8 +42,8 @@ const Login = (props: any) => {
             <img className={styles.loginTitle} src={loginRes} alt="Login"/>
             <img className={styles.loginLogo} src={loginLogo} alt="logo"/>
             <div className={styles.loginInputArea}>
-                <LineInput label="手机号" maxLength={11} type="mobile" onChange={(v: string) => setUserName(v)}/>
-                <VerifyCodeInput onBeforeSend={onBeforeSendClick} maxLength={6} className={styles.verifyCode} label="验证码" type="text" onChange={(v: string) => setVerifyCode(v)}/>
+                <LineInput label="手机号" maxLength={11} type="mobile" defaultValue={userName} onChange={(v: string) => setUserName(v)}/>
+                <VerifyCodeInput onBeforeSend={onBeforeSendClick} defaultValue={verifyCode} maxLength={6} className={styles.verifyCode} label="验证码" type="text" onChange={(v: string) => setVerifyCode(v)}/>
             </div>
             <button onClick={onLogin} className={styles.loginButton}>登录</button>
             <label className={styles.loginCopyRight}>

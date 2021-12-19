@@ -29,9 +29,13 @@ const Test = (props: any) => {
 
 const Page = withFrame({
     title: (opt) => {
-        return opt.profile.title || "心里测试";
+        return opt.profile?.title || "心里测试";
     },
     onInit: (opt:any) => {
+        if(!opt.profile) {
+            opt.navigateTo("/profile");
+            return ;
+        }
         opt.showLoading();
         opt.service.send({
             endPoint: "wenjuan.testByCategory",
@@ -42,14 +46,18 @@ const Page = withFrame({
             throwException: true
         }).then((resp: any) => {
             const listData = resp.data || [];
-            opt.hideLoading();
+            
             if(listData.length > 0) {
+                opt.hideLoading();
                 opt.saveTestList(listData);
             } else {
-                opt.showError({
-                    title: "暂无调查问卷",
-                    message: "暂无调查问卷，请耐心等待系统更新。"
-                });
+                setTimeout(() => {
+                    opt.hideLoading();
+                    opt.showError({
+                        title: "暂无调查问卷",
+                        message: "暂无调查问卷，请耐心等待系统更新。"
+                    });
+                }, 3000);
             }
         }).catch((err:any) => {
             opt.hideLoading();

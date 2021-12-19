@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import withFrame from "../../HOC/withFrame";
 import withContext from "../../HOC/withContext";
 import { utils } from "elmer-common";
@@ -7,10 +7,22 @@ import styles from "./style.module.scss";
 
 const Description = (props: any) => {
     const [ detail, setDetail ] = useState(props.detail || {});
+    const startTest = useCallback(() =>{
+        props.navigateTo("/question", {
+            state: {
+                questionData: {
+                    id: detail.id,
+                    title: detail.title,
+                    type: detail.type,
+                    category: detail.category,
+                    items: detail.items
+                }
+            }
+        });
+    },[detail, props]);
     useEffect(()=>{
         setDetail(props.detail || {});
     },[props.detail]);
-    console.log(props);
     return (
         <div className={styles.desc_page}>
             <div className={styles.description}>
@@ -22,7 +34,7 @@ const Description = (props: any) => {
                     </div>
                 </div>
             </div>
-            <button className={styles.btnStart}>开始测试</button>
+            <button onClick={startTest} className={styles.btnStart}>开始测试</button>
             <div className={styles.useDoc}><p>{detail.useDoc}</p></div>
         </div>
     );
@@ -33,6 +45,10 @@ const Page = withFrame({
         return opt.profile.title || "心里测试";
     },
     onInit: (opt:any) => {
+        if(!opt.profile) {
+            opt.navigateTo("/profile");
+            return ;
+        }
         opt.showLoading();
         opt.service.send({
             endPoint: "wenjuan.question",
@@ -82,7 +98,7 @@ export default withContext({
         };
     },
     mapDispatchToProps: (dispatch) => ({
-        saveDetail: (data: any[]) => dispatch("detail", data)
+        saveDetail: (data: any[]) => dispatch("detail", data),
     })
 })(
     withService()(Page)

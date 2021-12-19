@@ -3,6 +3,7 @@ import { utils } from "elmer-common";
 
 type TypeCommonHandlerOpt = {
     throwException?: boolean;
+    returnValue?: any;
     onError?(err: {
         statusCode?: string;
         message?: string;
@@ -30,6 +31,12 @@ export const commonHandler = (respData:any, errorResponse?: boolean, opt?: TypeC
                 statusCode: resp.statusCode,
                 message: msg
             });
+            if(opt) {
+                opt.returnValue = {
+                    statusCode: resp.statusCode,
+                    message: msg
+                };
+            }
             return true;
         } else {
             if(!isEmpty(resp.success) && !resp.success) {
@@ -43,6 +50,12 @@ export const commonHandler = (respData:any, errorResponse?: boolean, opt?: TypeC
                     statusCode: "F_500",
                     message: msg
                 });
+                if(opt) {
+                    opt.returnValue = {
+                        statusCode: resp.statusCode,
+                        message: msg
+                    };
+                }
                 return true;
             }
         }
@@ -60,6 +73,12 @@ export const commonHandler = (respData:any, errorResponse?: boolean, opt?: TypeC
             statusCode: resp.statusCode || resp.status,
             message: msg
         });
+        if(opt) {
+            opt.returnValue = {
+                statusCode: resp.statusCode,
+                message: msg
+            };
+        }
         return true;
     }
 };

@@ -109,8 +109,8 @@ const withFrame = (options: WithFrameOptions) => {
             }, [location,props,exProps]);
             return <div className={styles.withFramePage}>
                 <header>
-                    { !errInfo.show && <button className={styles.btnHome} onClick={()=> { typeof options.onHome === "function" && options.onHome(apiProps) }}/>}
-                    { errInfo.show && (
+                    { !loading && !errInfo.show && <button className={styles.btnHome} onClick={()=> { typeof options.onHome === "function" && options.onHome(apiProps) }}/>}
+                    { !loading && errInfo.show && (
                         <button
                             className={styles.btnCancel}
                             onClick={()=> {
@@ -122,8 +122,8 @@ const withFrame = (options: WithFrameOptions) => {
                         </button>
                     )}
                     <span>{title || ""}</span>
-                    { !errInfo.show && <button className={styles.btnHistory} onClick={()=> { typeof options.onHistory === "function" && options.onHistory(apiProps) }}/> }
-                    { errInfo.show && (
+                    { !loading && !errInfo.show && <button className={styles.btnHistory} onClick={()=> { typeof options.onHistory === "function" && options.onHistory(apiProps) }}/> }
+                    { !loading && errInfo.show && (
                         <button
                             className={styles.btnRetry}
                             onClick={()=> {
@@ -160,7 +160,6 @@ const withFrame = (options: WithFrameOptions) => {
                             {...optData}
                             {...exProps}
                             onInit={()=>{
-                                console.log("do--Init--");
                                 typeof options.onInit === "function" && options.onInit({
                                     ...props,
                                     ...exProps
