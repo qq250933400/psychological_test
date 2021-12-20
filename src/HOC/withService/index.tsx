@@ -63,6 +63,12 @@ const withService = () => {
                             }
                             if(!commonHandler(resp, false, handleEvent)) {
                                 resolve(resp.data);
+                            } else {
+                                reject({
+                                    ...resp,
+                                    statusCode: resp.data?.statusCode,
+                                    message: resp.data?.message
+                                });
                             }
                             if(handleEvent.returnValue?.statusCode === "NoLogin") {
                                 navigateTo("/login");

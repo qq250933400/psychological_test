@@ -12,9 +12,13 @@ type WithFrameExceptionInfo = {
     message: string;
 };
 type WithFrameTitleCallback = (props: any) => string;
+type WithFrameLoadingOption = {
+    title?: string;
+    mount?: boolean;
+};
 
 type WithFrameProps = {
-    showLoading():void;
+    showLoading(opt: WithFrameLoadingOption):void;
     hideLoading():void;
     setData(newData: any): void;
     showError(info: WithFrameExceptionInfo): void,
@@ -28,10 +32,10 @@ type WithFrameOptions = {
     showLoading?: boolean;
     loadingText?: string;
     onInit?(opt: WithFrameProps): void;
-    onCancel?(opt: WithFrameProps): void;
-    onRetry?(opt: WithFrameProps): void;
-    onHome?(opt: WithFrameProps): void;
-    onHistory?(opt: WithFrameProps): void;
+    onCancel?(opt: WithFrameProps, props: any): void;
+    onRetry?(opt: WithFrameProps, props: any): void;
+    onHome?(opt: WithFrameProps, props: any): void;
+    onHistory?(opt: WithFrameProps, props: any): void;
 };
 
 
@@ -52,8 +56,11 @@ const withFrame = (options: WithFrameOptions) => {
         }
         return (props: any) => {
             const location = useLocation();
-            const [ loading, setLoading ] = useState(options.showLoading);
-            const [ loadingText ] = useState(options.loadingText || "加载数据");
+            const [ loading, setLoading ] = useState({
+                visible: utils.isBoolean(options.showLoading) ? options.showLoading : false,
+                mount: false
+            });
+            const [ loadingText, setLoadingText ] = useState(options.loadingText || "加载数据");
             const [ optData, setOptData ] = useState({});
             const [ title ] = useState(() => {
                 return typeof options.title === "function" ? options.title(props) : options.title;
@@ -65,9 +72,23 @@ const withFrame = (options: WithFrameOptions) => {
             });
             const navigateTo = useNavigate();
             const exProps = useMemo(() => ({
-                showLoading: () => setLoading(true),
-                hideLoading: () => setLoading(false),
-                setData: (newData: any) => setOptData(newData || {}),
+                showLoading: (opt: WithFrameLoadingOption) => {
+                    if(opt?.title && !utils.isEmpty(opt?.title)) {
+                        setLoadingText(opt.title);
+                    }
+                    setLoading({
+                        visible: true,
+                        mount: utils.isBoolean(opt?.mount) ? opt?.mount : false
+                    });
+                },
+                hideLoading: () => setLoading({
+                    visible: false,
+                    mount: false
+                }),
+                setData: (newData: any) => setOptData({
+                    ...optData,
+                    ...(newData || {})
+                }),
                 showError: (info: WithFrameExceptionInfo) => setErrInfo({
                     show: true,
                     title: info.title || "操作失败",
@@ -79,7 +100,7 @@ const withFrame = (options: WithFrameOptions) => {
                     message: ""
                 }),
                 navigateTo: (to: To, options?: NavigateOptions) => navigateTo(to, options)
-            }),[navigateTo]);
+            }),[navigateTo, optData]);
             const apiProps = useMemo(() => ({
                 ...exProps,
                 init:()=>{
@@ -109,26 +130,26 @@ const withFrame = (options: WithFrameOptions) => {
             }, [location,props,exProps]);
             return <div className={styles.withFramePage}>
                 <header>
-                    { !loading && !errInfo.show && <button className={styles.btnHome} onClick={()=> { typeof options.onHome === "function" && options.onHome(apiProps) }}/>}
-                    { !loading && errInfo.show && (
+                    { !loading.visible && !errInfo.show && <button className={styles.btnHome} onClick={()=> { typeof options.onHome === "function" && options.onHome(apiProps, props) }}/>}
+                    { !loading.visible && errInfo.show && (
                         <button
                             className={styles.btnCancel}
                             onClick={()=> {
                                 apiProps.hideError();
-                                typeof options.onCancel === "function" && options.onCancel(apiProps);
+                                typeof options.onCancel === "function" && options.onCancel(apiProps, props);
                             }}
                         >
                             <LeftOutline /><span>取消</span>
                         </button>
                     )}
                     <span>{title || ""}</span>
-                    { !loading && !errInfo.show && <button className={styles.btnHistory} onClick={()=> { typeof options.onHistory === "function" && options.onHistory(apiProps) }}/> }
-                    { !loading && errInfo.show && (
+                    { !loading.visible && !errInfo.show && <button className={styles.btnHistory} onClick={()=> { typeof options.onHistory === "function" && options.onHistory(apiProps, props) }}/> }
+                    { !loading.visible && errInfo.show && (
                         <button
                             className={styles.btnRetry}
                             onClick={()=> {
                                 apiProps.hideError();
-                                typeof options.onRetry === "function" && options.onRetry(apiProps);
+                                typeof options.onRetry === "function" && options.onRetry(apiProps, props);
                             }}
                         >
                             <UndoOutline /><span>重试</span>
@@ -137,7 +158,7 @@ const withFrame = (options: WithFrameOptions) => {
                 </header>
                 <div className={styles.withFramePageContent}>
                     {
-                        loading && !errInfo.show && (
+                        loading.visible && !errInfo.show && (
                             <div className={styles.fullLoading}>
                                 <Loading color='white' />
                                 <span>{loadingText}</span>
@@ -155,17 +176,21 @@ const withFrame = (options: WithFrameOptions) => {
                         )
                     }
                     {
-                        !loading && !errInfo.show && <WrapperComponent
-                            {...props}
-                            {...optData}
-                            {...exProps}
-                            onInit={()=>{
-                                typeof options.onInit === "function" && options.onInit({
-                                    ...props,
-                                    ...exProps
-                                });
-                            }}
-                        />
+                        (!loading.visible || loading.mount) && !errInfo.show && (
+                            <div style={{display: !loading.visible ? "block" : "none"}}>
+                                <WrapperComponent
+                                    {...props}
+                                    {...optData}
+                                    {...exProps}
+                                    onInit={()=>{
+                                        typeof options.onInit === "function" && options.onInit({
+                                            ...props,
+                                            ...exProps
+                                        });
+                                    }}
+                                />
+                            </div>
+                        )
                     }
                 </div>
             </div>

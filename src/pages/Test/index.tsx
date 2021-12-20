@@ -29,18 +29,20 @@ const Test = (props: any) => {
 
 const Page = withFrame({
     title: (opt) => {
-        return opt.profile?.title || "心里测试";
+        return opt.contextData.profile?.title || "心里测试";
     },
     onInit: (opt:any) => {
-        if(!opt.profile) {
+        const contextData = opt.contextData || {};
+        if(!opt.contextData?.profile) {
             opt.navigateTo("/profile");
             return ;
         }
+        opt.setData(opt.contextData);
         opt.showLoading();
         opt.service.send({
             endPoint: "wenjuan.testByCategory",
             data: {
-                categoryId: opt.profile.id
+                categoryId: contextData.profile.id
             }
         }, {
             throwException: true

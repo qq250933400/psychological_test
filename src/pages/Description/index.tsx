@@ -42,18 +42,19 @@ const Description = (props: any) => {
 
 const Page = withFrame({
     title: (opt) => {
-        return opt.profile.title || "心里测试";
+        return opt.contextData?.profile.title || "心里测试";
     },
     onInit: (opt:any) => {
-        if(!opt.profile) {
+        if(!opt.contextData?.profile) {
             opt.navigateTo("/profile");
             return ;
         }
+        opt.setData(opt.contextData);
         opt.showLoading();
         opt.service.send({
             endPoint: "wenjuan.question",
             data: {
-                testId: opt.test.id
+                testId: opt.contextData.test.id
             }
         }, {
             throwException: true

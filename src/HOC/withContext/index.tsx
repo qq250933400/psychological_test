@@ -113,12 +113,12 @@ export const withContext = (options?: TypeWithContextOptions) => (ContextWrapper
         const mapDispatch = useMemo(() =>{
             return !withContextState.dispatchs && options?.mapDispatchToProps ? createDispatch(options?.mapDispatchToProps, contextRef) : withContextState.dispatchs;
         }, [createDispatch, contextRef]);
-        const formatMapData = useCallback(() => {
+        const formatMapData = useMemo(() => {
             return mapState || (options?.mapDataToProps && options.mapDataToProps(contextRef.getData(dataKey),contextRef.getData()));
         },[mapState, dataKey, contextRef]);
         // console.log(formatMapData());
         return (
-            <ContextWrapper timestamp={timestamp} {...props} {...formatMapData()} {...mapDispatch} context={contextRef}/>
+            <ContextWrapper timestamp={timestamp} {...props} {...mapDispatch} contextData={formatMapData} context={contextRef}/>
         );
     }
 };

@@ -6,6 +6,7 @@ import withContext from "../../HOC/withContext";
 import withService, { TypeService } from "../../HOC/withService";
 import styles from "./style.module.scss";
 import Radio from "antd-mobile/es/components/radio";
+import dialog from "antd-mobile/es/components/dialog";
 
 type TypeQuestionItemProps = {
     data: {
@@ -115,12 +116,20 @@ const Question = (props: any) => {
         }
     }, [ currentIndex, total ]);
     const onChange = useCallback((v:any) => {
-        const newAnwserList: any[] = [...answerList];
-        newAnwserList[v.index] = v.data;
-        setAnwserList(newAnwserList as any);
+        if(v.data) {
+            const newAnwserList: any[] = [...answerList];
+            newAnwserList[v.index] = v.data;
+            setAnwserList(newAnwserList as any);
+        } else {
+            console.error("No data", v);
+        }
     }, [answerList, setAnwserList]);
     const onSubmit = useCallback(() =>{
         const newSubmitData = [];
+        props.showLoading({
+            title: "提交问卷，生成报告。",
+            mount: true
+        });
         for(const item of answerList as any[]) {
             newSubmitData.push({
                 type: item.type || detail.type,
@@ -136,9 +145,18 @@ const Question = (props: any) => {
                 answer: newSubmitData
             }
         }).then((resp) => {
-            console.log(resp);
+            props.hideLoading();
+            dialog.alert({
+                content: "测试问卷提交成功！",
+                confirmText: "返回列表",
+                onConfirm: () => {
+                    props.navigateTo("/test");
+                }
+            });
+        }).catch(() => {
+            props.hideLoading();
         });
-    },[detail, answerList, service]);
+    },[detail, answerList, service, props]);
     const nextProps = useMemo(()=>{
         if(answerList[currentIndex]) {
             return {};
@@ -177,10 +195,11 @@ const Question = (props: any) => {
 
 const Page = withFrame({
     title: (opt) => {
-        return opt.profile?.title || "心里测试";
+        return opt.contextData.profile?.title || "心里测试";
     },
     onInit: (opt:any) => {
-        if(!opt.profile) {
+        opt.setData(opt.contextData);
+        if(!opt.contextData?.profile) {
             opt.navigateTo("/profile");
             return ;
         }
@@ -188,22 +207,32 @@ const Page = withFrame({
     onRetry: (opt) => {
         opt.init();
     },
-    onCancel: (opt) => {
-        opt.navigateTo("/test");
+    onCancel: (opt, props) => {
+        props.saveAnswer([]);
+        opt.navigateTo("/description");
     },
-    onHome: (opt) => {
+    onHome: (opt, props) => {
+        props.saveAnswer([]);
         opt.navigateTo("/test");
     }
 })(Question);
 
 export default withContext({
+    dataKey: "question",
     mapDataToProps: (data, rootData) => {
         return {
             ...data,
             profile: utils.getValue(rootData, "profile.profile"),
             test: utils.getValue(rootData, "test.test"),
         };
-    }
+    },
+    mapDispatchToProps: (dispatch) => ({
+        saveCurrentIndex: (index: any) => {
+            dispatch("currentIndex",index);
+            console.error(index);
+        },
+        saveAnswer: (data: any) => dispatch("answer", data)
+    })
 })(
     withService()(Page)
 );

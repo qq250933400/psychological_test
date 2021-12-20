@@ -244,7 +244,7 @@ const withFramePage =  withService()(withFrame({
     },
     onInit: (opt: any) => {
         const serviceObj: TypeService = opt.service;
-
+        opt.setData(opt.contextData);
         if(!opt.categoryList) {
             opt.showLoading();
             serviceObj.send({
