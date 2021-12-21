@@ -36,6 +36,10 @@ export default createServiceConfig({
                 history: {
                     url: "/wenjuan/question/test/history",
                     method: "POST"
+                },
+                getReport: {
+                    url: "/wenjuan/question/test/report",
+                    method: "POST"
                 }
             }
         }

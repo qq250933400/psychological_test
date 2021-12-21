@@ -1,3 +1,8 @@
+
+@font-face {
+  font-family: PuHuiTi;
+  src: url(./res/font/Alibaba-PuHuiTi-Heavy.ttf);
+}
 html,body,#root {
   margin: 0;
   padding: 0;
@@ -11,6 +16,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  font-family: PuHuiTi;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

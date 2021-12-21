@@ -1,0 +1,160 @@
+$boxShadow:  0 0 3px rgba(0, 0, 0, 0.4);
+.report {
+    display: block;
+    padding: 1rem;
+    padding-top: 2rem;
+    .title {
+        display: block;
+        padding: 1.2rem;
+        border-radius: 8px;
+        background: #ffdf00;
+        position: relative;
+        overflow: hidden;
+        box-shadow: $boxShadow;
+        text-align: center;
+        &::after {
+            display: block;
+            height: 100%;
+            width: 100%;
+            content: "";
+            background: rgba(255,255,255, .6);
+            position: absolute;
+            left: 0;
+            top: 70%;
+            transform-origin: 14% 1%;
+            transform: rotateZ(4deg);
+        }
+        span {
+            font-size: 1.5rem;
+            display: inline-block;
+            padding-left: 2.2rem;
+            position: relative;
+            font-weight: bolder;
+            text-shadow: 3px 3px 3px rgba(255,255,255,1);
+            &::before {
+                content: "";
+                display: block;
+                width: 1.8rem;
+                height: 1.8rem;
+                position: absolute;
+                left: 0;
+                top: .2rem;
+                background: url(../../res/records.png) no-repeat;
+                background-size: contain;
+            }
+        }
+    }
+}
+.section {
+    display: block;
+    border-radius: 8px;
+    background: #d1ebfe;
+    margin-top: 1rem;
+    box-shadow: $boxShadow;
+    overflow: hidden;
+    .section_header {
+        display: block;
+        padding: 1rem;
+    }
+    .section_title {
+        display: block;
+        position: relative;
+        padding-left: 2rem;
+        font-size: 1.2rem;
+        font-weight: bolder;
+        &::before {
+            content: "";
+            display: block;
+            width: 1.4rem;
+            height: 1.4rem;
+            background: url(../../res/topic.png) no-repeat;
+            background-size: contain;
+            position: absolute;
+            left: 0;
+            top: .1rem;
+        }
+    }
+    .section_subtitle {
+        font-size: 1.0rem;
+        margin-bottom: .4rem;
+        &::before {
+            width: 1.2rem;
+            height: 1.2rem;
+            top: 0;
+        }
+    }
+    .section_context {
+        display: block;
+        background: #fff;
+        padding: 1rem;
+        .report_context {
+            margin-top: 1rem;
+            text-indent: 2rem;
+            font-size: 1rem;
+            line-height: 1.4rem;
+        }
+        .line {
+            height: 0;
+            border-bottom: 1px solid #44a6f7;
+            display: block;
+            margin: 1rem 0;
+        }
+    }
+    .iconResult::before {
+        background: url(../../res/chat.png) no-repeat;
+        background-size: contain;
+    }
+    
+}
+.recommendation>header>span::before {
+    background: url(../../res/comment.png) no-repeat !important;
+    background-size: contain !important;
+    color: red;
+}
+.docTitle {
+    display: block;
+    margin: 1.8rem 0;
+    text-align: center;
+    span {
+        display: inline-block;
+        position: relative;
+        font-size: 1.2rem;
+        font-weight: bold;
+        padding-left: 2.1rem;
+        &::before {
+            content: "";
+            display: block;
+            width: 1.6rem;
+            height: 1.6rem;
+            position: absolute;
+            left: 0;
+            top: .4rem;
+            background: url(../../res/resource.png) no-repeat;
+            background-size: contain;
+        }
+    }
+}
+.docList,.docList li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+.docList li {
+    display: block;
+    border-radius: 8px;
+    background: #eee;
+    overflow: hidden;
+    margin-top: .8rem;
+    box-shadow: $boxShadow;
+    a {
+        display: block;
+        text-decoration: none;
+        padding: 1rem;
+        color: #121212;
+        font-size: 1rem;
+    }
+}
+.docList li:first-child {
+    margin-top: 0;
+}

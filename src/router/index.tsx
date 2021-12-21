@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Login, Profile, Test, Description, Question, History } from "../pages";
+import { Login, Profile, Test, Description, Question, History, Report } from "../pages";
 
 export default (): any=> {
     return (
@@ -13,6 +13,7 @@ export default (): any=> {
                 <Route path="/description" element={<Description />}/>
                 <Route path="/question" element={<Question />}/>
                 <Route path="/history" element={<History />}/>
+                <Route path="report" element={<Report />}/>
                 <Route path="/" element={<Profile />}/>
             </Routes>
         </BrowserRouter>
