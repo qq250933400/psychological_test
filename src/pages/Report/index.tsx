@@ -48,23 +48,19 @@ const Report = (props: any) => {
             }
         }).then((resp: any)=>{
             setReportData(resp.data || {});
-            setTimeout(() => {
-                props.hideLoading();
-            }, 3000);
+            props.hideLoading();
         }).catch((err)=>{
             props.hideLoading();
         });
     },[testData ,service, props]);
     useEffect(() => {
         if(location.state) {
-            console.log("loadState", location.state);
             refreshList();
         } else {
             console.log("gotoHistory");
             props.navigateTo("/history");
         }
     },[]);
-    console.log(location);
     return (
         <div className={styles.report}>
             <label className={styles.title}><span>测试报告</span></label>
@@ -105,7 +101,7 @@ const Page = withFrame({
         opt.navigateTo("/profile");
     },
     onHome: (opt) => {
-        opt.navigateTo("/test");
+        opt.navigateTo("/profile");
     }
 })(Report);
 

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import withFrame from "../../HOC/withFrame";
 import PullToRefresh from "antd-mobile/es/components/pull-to-refresh";
-import { utils } from "elmer-common";
 import withService, { TypeService } from "../../HOC/withService";
 import styles from "./style.module.scss";
 
@@ -35,7 +34,6 @@ const History = (props: any) => {
     useEffect(() => {
         setListData(props.listData);
     },[props.listData]);
-    console.log(listData);
     return (
         <div className={styles.history}>
             <label className={styles.title}><span>测试记录</span></label>
@@ -100,17 +98,3 @@ const Page = withFrame({
 })(History);
 
 export default withService()(Page);
-
-// export default withContext({
-//     dataKey: "history",
-//     mapDataToProps: (data) => {
-//         return {
-//             ...data
-//         };
-//     },
-//     mapDispatchToProps: (dispatch) => ({
-//         saveHistory: (data: any[]) => dispatch("detail", data),
-//     })
-// })(
-//     withService()(Page)
-// );

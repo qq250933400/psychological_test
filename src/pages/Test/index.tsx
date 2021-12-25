@@ -52,14 +52,15 @@ const Page = withFrame({
             if(listData.length > 0) {
                 opt.hideLoading();
                 opt.saveTestList(listData);
+                opt.setData({
+                    testList: listData
+                });
             } else {
-                setTimeout(() => {
-                    opt.hideLoading();
-                    opt.showError({
-                        title: "暂无调查问卷",
-                        message: "暂无调查问卷，请耐心等待系统更新。"
-                    });
-                }, 3000);
+                opt.hideLoading();
+                opt.showError({
+                    title: "暂无调查问卷",
+                    message: "暂无调查问卷，请耐心等待系统更新。"
+                });
             }
         }).catch((err:any) => {
             opt.hideLoading();

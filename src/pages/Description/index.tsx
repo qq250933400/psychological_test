@@ -42,9 +42,10 @@ const Description = (props: any) => {
 
 const Page = withFrame({
     title: (opt) => {
-        return opt.contextData?.profile.title || "心里测试";
+        return opt.contextData?.profile?.title || "心里测试";
     },
     onInit: (opt:any) => {
+        console.log(opt);
         if(!opt.contextData?.profile) {
             opt.navigateTo("/profile");
             return ;

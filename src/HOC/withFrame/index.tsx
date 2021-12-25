@@ -38,6 +38,15 @@ type WithFrameOptions = {
     onHistory?(opt: WithFrameProps, props: any): void;
 };
 
+type TypeWithFrameContext = {
+    data: any;
+    setData(newData: any): void;
+};
+
+const WithFrameContext = React.createContext<TypeWithFrameContext>({
+    data: {},
+    setData:() => {}
+});
 
 const withFrame = (options: WithFrameOptions) => {
     const withFrameState = {
@@ -110,6 +119,17 @@ const withFrame = (options: WithFrameOptions) => {
                     });
                 }
             }), [props, exProps]);
+            const contextValues = useMemo(()=>{
+                return {
+                    data: optData,
+                    setData: (newData: any) => {
+                        setOptData({
+                            ...optData,
+                            ...(newData || {})
+                        });
+                    }
+                }
+            },[optData])
             useEffect(() => {
                 !withFrameState.isInit && typeof options.onInit === "function" && options.onInit({
                     ...props,
@@ -128,7 +148,8 @@ const withFrame = (options: WithFrameOptions) => {
                 }
                 sessionStorage.setItem("location", location.pathname);
             }, [location,props,exProps]);
-            return <div className={styles.withFramePage}>
+            return <WithFrameContext.Provider value={contextValues}>
+            <div className={styles.withFramePage}>
                 <header>
                     { !loading.visible && !errInfo.show && <button className={styles.btnHome} onClick={()=> { typeof options.onHome === "function" && options.onHome(apiProps, props) }}/>}
                     { !loading.visible && errInfo.show && (
@@ -194,6 +215,7 @@ const withFrame = (options: WithFrameOptions) => {
                     }
                 </div>
             </div>
+            </WithFrameContext.Provider>
         }
     }
 };

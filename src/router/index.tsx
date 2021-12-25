@@ -13,7 +13,7 @@ export default (): any=> {
                 <Route path="/description" element={<Description />}/>
                 <Route path="/question" element={<Question />}/>
                 <Route path="/history" element={<History />}/>
-                <Route path="report" element={<Report />}/>
+                <Route path="/report" element={<Report />}/>
                 <Route path="/" element={<Profile />}/>
             </Routes>
         </BrowserRouter>

@@ -261,20 +261,20 @@ const withFramePage =  withService()(withFrame({
                     });
                 }
                 opt.saveCategory(newListData || []);
-                setTimeout(() => {
-                    opt.hideLoading()
-                    if(newListData.length <= 0) {
-                        console.log("hello");
-                        opt.showError({
-                            title: "加载失败",
-                            message: "获取分组信息失败，点击右上角按钮重试。"
-                        });
-                    } else {
-                        opt.hideError();
-                    }
-                }, 1000);
-                
-            }).catch(() => {
+                opt.setData({
+                    categoryList: newListData || []
+                });
+                opt.hideLoading()
+                if(newListData.length <= 0) {
+                    opt.showError({
+                        title: "加载失败",
+                        message: "获取分组信息失败，点击右上角按钮重试。"
+                    });
+                } else {
+                    opt.hideError();
+                }
+            }).catch((err) => {
+                console.error(err);
                 opt.hideLoading();
                 opt.showError({
                     title: "加载失败",
