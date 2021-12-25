@@ -9,8 +9,8 @@ import withService, { TypeService  } from "../../HOC/withService";
 
 
 const Login = (props: any) => {
-    const [ userName, setUserName ] = useState("18924290704");
-    const [ verifyCode, setVerifyCode ] = useState("22111");
+    const [ userName, setUserName ] = useState("");
+    const [ verifyCode, setVerifyCode ] = useState("");
 
     const service: TypeService = props.service;
 
