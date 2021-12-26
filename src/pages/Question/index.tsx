@@ -156,7 +156,8 @@ const Question = (props: any) => {
                 onConfirm: () => {
                     props.navigateTo("/report", {
                         state: {
-                            report: resp.data
+                            report: resp.data,
+                            testTitle: detail.testTitle || detail.title || ""
                         }
                     });
                 }
