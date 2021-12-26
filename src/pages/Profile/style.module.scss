@@ -7,6 +7,7 @@
         border-radius:8px;
         overflow: hidden;
         width: 70vw;
+        margin-left: 20px;
         >div {
             display: block;
             padding: 3.5rem 0;
@@ -15,6 +16,7 @@
                 width: 80%;
                 margin: 0 auto;
                 border-radius: 100%;
+                background:#fff;
             }
         }
         >label {
@@ -28,13 +30,16 @@
             box-shadow:0 2px 4px 0 rgba(238,238,238,0.50);
         }
     }
+    .profileCard:first-child {
+        margin-left: 0;
+    }
     .cards {
         display: block;
         width: 70vw;
         margin: 0 auto;
         margin-top: 2rem;
         white-space: nowrap;
-        overflow: hidden;
+        overflow: visible;
         border-radius:8px;
     }
 }

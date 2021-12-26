@@ -1,15 +1,18 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { MathAnimationApi } from "elmer-common";
 import styles from "./style.module.scss";
 import withFrame from "../../HOC/withFrame";
 import withService, { TypeService } from "../../HOC/withService";
 import withContext from "../../HOC/withContext";
-import ImgProfile from "../../res/profile.jpg";
+import ImgJunior from "../../res/junior.png";
+import ImgPrimary from "../../res/primary.png";
+import ImgSenior from "../../res/senior.jpg";
 
 type TypeProfileInfo = {
     title: string;
     value: string;
+    name: string;
 };
 type TypeProfileProps = {
     data: TypeProfileInfo;
@@ -22,11 +25,20 @@ type TypeScrollAnimation = {
     complete?: Function;
 }
 
+const imgState:any = {
+    primary: ImgPrimary,
+    junior: ImgJunior,
+    senior: ImgSenior
+};
+
 const ProfileCard = (props: TypeProfileProps) => {
+    const imgData = useMemo(() => {
+        return imgState[props.data.name] || ImgJunior;
+    }, [props.data]);
     return (
         <div className={styles.profileCard}>
             <div>
-                <img src={ImgProfile} alt={props.data.title}/>
+                <img src={imgData} alt={props.data.title}/>
             </div>
             <label><span>{props.data.title}</span></label>
         </div>
@@ -44,7 +56,8 @@ const Profile = (props: any) => {
             scrollX: 0,
             isPressed: false,
             isTransformEvent: false,
-            width: 0
+            width: 0,
+            positionOffset: 20
         }
     });
     const cards = useRef(null);
@@ -91,7 +104,7 @@ const Profile = (props: any) => {
                 if(toLeft) {
                     const nextIndex = mouseEvent.stateData.offsetIndex + 1;
                     if(nextIndex < profileList.length) {
-                        const scrollToX = itemWidth * nextIndex;
+                        const scrollToX = itemWidth * nextIndex + nextIndex * mouseEvent.stateData.positionOffset;
                         const scrollOffsetX = scrollToX - Math.abs(mouseEvent.stateData.scrollX);
                         doScrollAction({
                             changeOffsetX: -scrollOffsetX,
@@ -103,7 +116,7 @@ const Profile = (props: any) => {
                         mouseEvent.stateData.offsetIndex = nextIndex;
                     } else {
                         const scrollToX = itemWidth * mouseEvent.stateData.offsetIndex;
-                        const scrollOffsetX = Math.abs(Math.abs(lastOffsetX) - scrollToX)
+                        const scrollOffsetX = Math.abs(Math.abs(lastOffsetX) - scrollToX) - (profileList.length - 1) * mouseEvent.stateData.positionOffset;
                         doScrollAction({
                             changeOffsetX: scrollOffsetX,
                             startOffsetX:lastOffsetX
@@ -113,7 +126,7 @@ const Profile = (props: any) => {
                     const nextIndex = mouseEvent.stateData.offsetIndex - 1;
                     if(nextIndex >= 0) {
                         const scrollToX = itemWidth * nextIndex;
-                        const scrollOffsetX = scrollToX - Math.abs(mouseEvent.stateData.scrollX);
+                        const scrollOffsetX = scrollToX - Math.abs(mouseEvent.stateData.scrollX) + nextIndex * mouseEvent.stateData.positionOffset;
                         doScrollAction({
                             changeOffsetX: Math.abs(scrollOffsetX),
                             startOffsetX: lastOffsetX,
