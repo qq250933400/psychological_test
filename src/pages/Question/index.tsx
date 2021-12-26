@@ -144,13 +144,21 @@ const Question = (props: any) => {
                 testId: detail.id,
                 answer: newSubmitData
             }
-        }).then((resp) => {
+        }).then((resp:any) => {
             props.hideLoading();
-            dialog.alert({
+            dialog.confirm({
                 content: "测试问卷提交成功！",
-                confirmText: "返回列表",
-                onConfirm: () => {
+                confirmText: "查看报告",
+                cancelText: "返回列表",
+                onCancel: () => {
                     props.navigateTo("/test");
+                },
+                onConfirm: () => {
+                    props.navigateTo("/report", {
+                        state: {
+                            report: resp.data
+                        }
+                    });
                 }
             });
         }).catch(() => {

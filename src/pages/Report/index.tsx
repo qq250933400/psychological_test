@@ -34,7 +34,7 @@ const Report = (props: any) => {
     const service: TypeService = props.service;
     const location = useLocation();
     const [ testData ] = useState(location.state || {});
-    const [ reportData, setReportData ] = useState({} as any);
+    const [ reportData, setReportData ] = useState((location.state.report || {}) as any);
     const refreshList = useCallback(()=>{
         props.showLoading({
             mount: true
@@ -54,7 +54,7 @@ const Report = (props: any) => {
         });
     },[testData ,service, props]);
     useEffect(() => {
-        if(location.state) {
+        if(location.state && !location.state.report) {
             refreshList();
         } else {
             console.log("gotoHistory");
