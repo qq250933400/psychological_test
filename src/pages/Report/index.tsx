@@ -68,14 +68,24 @@ const Report = (props: any) => {
                 <div>
                     <SectionHeader className={styles.iconResult} title="测试结果"/>
                     <p className={styles.report_context}>{reportData.result}</p>
-                    <div className={styles.line}/>
-                    <SectionHeader className={styles.iconResult} title="分量表分析"/>
-                    <p className={styles.report_context} dangerouslySetInnerHTML={{__html: reportData.analysisTable}} />
+                    {
+                        !utils.isEmpty(reportData.analysisTable) && (
+                            <>
+                                <div className={styles.line}/>
+                                <SectionHeader className={styles.iconResult} title="分量表分析"/>
+                                <p className={styles.report_context} dangerouslySetInnerHTML={{__html: reportData.analysisTable}} />
+                            </>
+                        )
+                    }
                 </div>
             </Section>
-            <Section className={styles.recommendation} title="综合性建议">
-                <div className={styles.report_context} dangerouslySetInnerHTML={{__html: reportData.recommendations}}/>
-            </Section>
+            {
+                utils.isEmpty(reportData.recommendations) && (
+                    <Section className={styles.recommendation} title="综合性建议">
+                        <div className={styles.report_context} dangerouslySetInnerHTML={{__html: reportData.recommendations}}/>
+                    </Section>
+                )
+            }
             <label className={styles.docTitle}><span>学习资料</span></label>
             <ul className={styles.docList}>
                 {
