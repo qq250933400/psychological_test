@@ -82,24 +82,30 @@ const Report = (props: any) => {
                 </div>
             </Section>
             {
-                utils.isEmpty(reportData.recommendations) && (
+                !utils.isEmpty(reportData.recommendations) && (
                     <Section className={styles.recommendation} title="综合性建议">
                         <div className={styles.report_context} dangerouslySetInnerHTML={{__html: reportData.recommendations}}/>
                     </Section>
                 )
             }
-            <label className={styles.docTitle}><span>学习资料</span></label>
-            <ul className={styles.docList}>
-                {
-                    reportData.docs && reportData.docs.map((doc:any, index: number) => {
-                        return <li key={index}>
-                            <a href={doc.url}>
-                                <span>{index + 1}. {doc.title}</span>
-                            </a>
-                        </li>
-                    })
-                }
-            </ul>
+            {
+                reportData.docs && reportData.docs.length > 0 && (
+                    <>
+                        <label className={styles.docTitle}><span>学习资料</span></label>
+                        <ul className={styles.docList}>
+                            {
+                                reportData.docs && reportData.docs.map((doc:any, index: number) => {
+                                    return <li key={index}>
+                                        <a href={doc.url}>
+                                            <span>{index + 1}. {doc.title}</span>
+                                        </a>
+                                    </li>
+                                })
+                            }
+                        </ul>
+                    </>
+                )
+            }
         </div>
     );
 };
