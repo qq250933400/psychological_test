@@ -39,13 +39,15 @@
         >p:nth-child(2) {
             margin-top: 0;
             font-size: 1rem;
+            text-indent: 2rem;
+            line-height: 1.6rem;
         }
     }
 }
 .useDoc {
     display: block;
-    color:#121212;
-    font-size: 1rem;
+    color: #4c4c4c;
+    font-size: .9rem;
     line-height: 1.8rem;
     padding: 2rem;
 }

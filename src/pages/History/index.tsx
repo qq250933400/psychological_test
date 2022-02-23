@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import withFrame from "../../HOC/withFrame";
 import PullToRefresh from "antd-mobile/es/components/pull-to-refresh";
+import dialog from "antd-mobile/es/components/dialog";
 import withService, { TypeService } from "../../HOC/withService";
 import styles from "./style.module.scss";
 
@@ -31,6 +32,13 @@ const History = (props: any) => {
             });
         });
     },[page,pageSize,listData,service, setPage,setListData]);
+    const onQuitApp = useCallback(() => {
+        service.send({
+            endPoint: "wenjuan.exitApp"
+        }).then(() => {
+            props.navigateTo("/login");
+        });
+    },[]);
     useEffect(() => {
         setListData(props.listData);
     },[props.listData]);
@@ -52,6 +60,7 @@ const History = (props: any) => {
                     }
                 </ul>
             </PullToRefresh>
+            <button onClick={onQuitApp} className={styles.quitApplication}>退出</button>
         </div>
     );
 };

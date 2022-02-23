@@ -84,7 +84,7 @@ const QuestionDetail = (props: TypeQuestionDetailProps) => {
     },[props.index, props.total, props.data]);
     return (
         <div className={styles.detail}>
-            <h6>（{formatIndex(index + 1, total)}）{data.title}</h6>
+            <h6>（{formatIndex(index + 1, total)}）<b>{data.title}</b></h6>
             <ul>
                 <Radio.Group value={(selectedItem as any)?.value}>
                     {
@@ -146,20 +146,10 @@ const Question = (props: any) => {
             }
         }).then((resp:any) => {
             props.hideLoading();
-            dialog.confirm({
-                content: "测试问卷提交成功！",
-                confirmText: "查看报告",
-                cancelText: "返回列表",
-                onCancel: () => {
-                    props.navigateTo("/test");
-                },
-                onConfirm: () => {
-                    props.navigateTo("/report", {
-                        state: {
-                            report: resp.data,
-                            testTitle: detail.testTitle || detail.title || ""
-                        }
-                    });
+            props.navigateTo("/report", {
+                state: {
+                    report: resp.data,
+                    testTitle: detail.testTitle || detail.title || ""
                 }
             });
         }).catch(() => {

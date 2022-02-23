@@ -7,17 +7,17 @@ $boxShadow:  0 0 3px rgba(0, 0, 0, 0.4);
         display: block;
         padding: 1.2rem;
         border-radius: 8px;
-        background: #ffdf00;
+        // background: #ffdf00;
         position: relative;
         overflow: hidden;
-        box-shadow: $boxShadow;
+        // box-shadow: $boxShadow;
         text-align: center;
         &::after {
             display: block;
             height: 100%;
             width: 100%;
             content: "";
-            background: rgba(255,255,255, .6);
+            // background: rgba(255,255,255, .6);
             position: absolute;
             left: 0;
             top: 70%;
@@ -91,7 +91,7 @@ $boxShadow:  0 0 3px rgba(0, 0, 0, 0.4);
             margin-top: 1rem;
             text-indent: 2rem;
             font-size: 1rem;
-            line-height: 1.4rem;
+            line-height: 1.8rem;
         }
         .line {
             height: 0;

@@ -30,7 +30,7 @@ const Description = (props: any) => {
                     <h5 className={styles.description_title}>{detail.title}</h5>
                     <div className={styles.description_text}>
                         <b>测试说明：</b>
-                        <p>{detail.description}</p>
+                        <p className="text">{detail.description}</p>
                     </div>
                 </div>
             </div>
@@ -45,7 +45,6 @@ const Page = withFrame({
         return opt.contextData?.profile?.title || "心里测试";
     },
     onInit: (opt:any) => {
-        console.log(opt);
         if(!opt.contextData?.profile) {
             opt.navigateTo("/profile");
             return ;

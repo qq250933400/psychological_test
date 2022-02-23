@@ -14,7 +14,7 @@ $sectionBackGround: #d1ebfe;
             display: block;
             position: relative;
             padding-left: 2rem;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             &::before {
                 content: "";
@@ -30,7 +30,7 @@ $sectionBackGround: #d1ebfe;
         }
         .header_count {
             margin-top: 1rem;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: normal;
             color:#0091ff;
             &::before {
@@ -38,7 +38,7 @@ $sectionBackGround: #d1ebfe;
                 background-size: contain;
             }
             b {
-                color: #333;
+                color: #f99a09;
                 padding: 0 .1rem;
             }
         }

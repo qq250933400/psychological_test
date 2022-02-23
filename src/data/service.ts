@@ -40,6 +40,10 @@ export default createServiceConfig({
                 getReport: {
                     url: "/wenjuan/question/test/report",
                     method: "POST"
+                },
+                exitApp: {
+                    url: "/wenjuan/user/logout",
+                    method: "POST"
                 }
             }
         }

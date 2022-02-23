@@ -6,6 +6,7 @@ import withService, { TypeService } from "../../HOC/withService";
 import styles from "./style.module.scss";
 import staticObj from "../../utils";
 import { useLocation } from "react-router-dom";
+import imgTestReport from "../../res/test_report_title.png";
 
 type TypeSectionProps = {
     title: string;
@@ -54,18 +55,19 @@ const Report = (props: any) => {
         });
     },[testData ,service, props]);
     useEffect(() => {
-        console.log(location.state);
         if(location.state && !location.state.report) {
             refreshList();
         } else {
-            setTimeout(() => {
+            !location.state.report && setTimeout(() => {
                 props.navigateTo("/history");
             }, 1000);
         }
     },[]);
     return (
         <div className={styles.report}>
-            <label className={styles.title}><span>测试报告</span></label>
+            <label className={styles.title}>
+                <img src={imgTestReport} style={{width: "135px"}} alt="测试报告" />
+            </label>
             <Section title={testData.testTitle }>
                 <div>
                     <SectionHeader className={styles.iconResult} title="测试结果"/>
