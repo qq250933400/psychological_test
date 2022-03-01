@@ -36,6 +36,7 @@ const History = (props: any) => {
         service.send({
             endPoint: "wenjuan.exitApp"
         }).then(() => {
+            sessionStorage.removeItem("token");
             props.navigateTo("/login");
         });
     },[]);

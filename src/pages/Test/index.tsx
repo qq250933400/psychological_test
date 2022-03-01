@@ -19,7 +19,12 @@ const Test = (props: any) => {
             <ul>
                 {
                     testList.map((item: any, index: number) => {
-                        return <li key={index} onClick={() => onClick(item)}><span>{item.title}</span></li>
+                        return <li key={index} onClick={() => onClick(item)}>
+                            <div>
+                                <img src={item.image} alt="None"/>
+                                <span>{item.title}</span>
+                            </div>
+                        </li>
                     })
                 }
             </ul>

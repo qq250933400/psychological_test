@@ -10,23 +10,30 @@
     }
     ul {
         li {
-            padding: .8rem;
-            border-radius: 8px;
-            background: #d1ebfe;
+            padding: .4rem;
+            border-radius: 3px;
+            background: #fff;
             margin-top: .8rem;
-            padding-left: 2.6rem;
             position: relative;
-            &::before {
+            >div {
                 display: block;
-                content: "";
-                width: 1.6rem;
-                height: 1.6rem;
-                background: url(../../res/question.png) no-repeat;
-                background-size: contain;
-                position: absolute;
-                left: .6rem;
-                top: 50%;
-                margin-top: -.8rem;
+                >img {
+                    display: block;
+                    max-width: 100%;
+                    margin: 0 auto;
+                    &::after {
+                        display: block;
+                        content: "";
+                        width: 20px;
+                        height: 20px;
+                        background: #fff;
+                    }
+                }
+                >span {
+                    display: block;
+                    padding: .1rem 0;
+                    line-height: 1.2rem;
+                }
             }
         }
         li:first-child {

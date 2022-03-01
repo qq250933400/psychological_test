@@ -100,7 +100,7 @@ const QuestionDetail = (props: TypeQuestionDetailProps) => {
 
 const Question = (props: any) => {
     const location = useLocation();
-    const [ detail ] = useState(location.state.questionData);
+    const [ detail ] = useState(location.state?.questionData);
     const [ currentIndex, setCurrentIndex ] = useState(0);
     const [ answerList, setAnwserList ] = useState([]);
     const service: TypeService = props.service;
