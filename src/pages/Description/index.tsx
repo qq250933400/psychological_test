@@ -30,12 +30,12 @@ const Description = (props: any) => {
                     <h5 className={styles.description_title}>{detail.title}</h5>
                     <div className={styles.description_text}>
                         <b>测试说明：</b>
-                        <p className="text">{detail.description}</p>
+                        <p className="text" dangerouslySetInnerHTML={{__html: detail.description}} />
                     </div>
                 </div>
             </div>
             <button onClick={startTest} className={styles.btnStart}>开始测试</button>
-            <div className={styles.useDoc}><p>{detail.useDoc}</p></div>
+            <div className={styles.useDoc}><p dangerouslySetInnerHTML={{__html: detail.useDoc}} /></div>
         </div>
     );
 };

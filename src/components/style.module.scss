@@ -2,14 +2,15 @@
     display: block;
     >div {
         display:flex;
-        font-size: 1.0rem;
+        font-size: .9rem;
         color: #fff;
         .lineInputLabel {
             flex: 0 0 4rem;
-            padding-right: .8rem;
             text-align: left;
             height: 2rem;
             line-height: 2rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .lineInputBox {
             flex: auto;

@@ -71,7 +71,7 @@ const Report = (props: any) => {
             <Section title={testData.testTitle }>
                 <div>
                     <SectionHeader className={styles.iconResult} title="测试结果"/>
-                    <p className={styles.report_context}>{reportData.result}</p>
+                    <p className={styles.report_context} dangerouslySetInnerHTML={{__html: reportData.result}}/>
                     {
                         !utils.isEmpty(reportData.analysisTable) && (
                             <>
