@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { MathAnimationApi } from "elmer-common";
+import { MathAnimationApi, utils } from "elmer-common";
 import styles from "./style.module.scss";
 import withFrame from "../../HOC/withFrame";
 import withService, { TypeService } from "../../HOC/withService";
@@ -247,7 +247,10 @@ const Profile = (props: any) => {
 };
 
 const withFramePage =  withService()(withFrame({
-    title: "选择身份",
+    title: (opt) => {
+        const identityText = opt.contextData.identity === 1 ? "家长" : "学生";
+        return ["选择身份", "(", identityText, ")"].join("");
+    },
     showLoading: true,
     onCancel: (opt) => {
         opt.navigateTo("/login");
@@ -258,6 +261,10 @@ const withFramePage =  withService()(withFrame({
     onInit: (opt: any) => {
         const serviceObj: TypeService = opt.service;
         opt.setData(opt.contextData);
+        if(utils.isEmpty(opt.contextData?.identity)) {
+            opt.navigateTo("/identity");
+            return;
+        }
         if(!opt.categoryList) {
             opt.showLoading();
             serviceObj.send({
@@ -297,12 +304,20 @@ const withFramePage =  withService()(withFrame({
         } else {
             opt.hideLoading();
         }
+    },
+    onHome: (opt) => {
+        opt.navigateTo("/identity");
     }
 })(Profile));
 
 export default withContext({
     dataKey: "profile",
-    mapDataToProps: (data) => data,
+    mapDataToProps: (data, rootData: any) => {
+        return {
+            ...(data || {}),
+            identity: rootData.identity?.value
+        };
+    },
     mapDispatchToProps: (dispatch) => {
         return {
             saveCategory: (data:any) => dispatch("categoryList", data),

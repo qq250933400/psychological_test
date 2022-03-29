@@ -58,7 +58,7 @@ const Report = (props: any) => {
         if(location.state && !location.state.report) {
             refreshList();
         } else {
-            !location.state.report && setTimeout(() => {
+            !location.state?.report && setTimeout(() => {
                 props.navigateTo("/history");
             }, 1000);
         }

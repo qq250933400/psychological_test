@@ -27,7 +27,7 @@ const HocContext = createContext<TypeHOCContext>({
 const localKey: string = "HOC_c71e18cd492829dede9e5053d843";
 
 export const WithHOCProvider = (props: TypeWithHOCProviderProps) => {
-    const [ data, setSrcData ] = useState(()=> {
+    const [ data ] = useState(()=> {
         let initData = {
             root: {}
         };
@@ -41,15 +41,13 @@ export const WithHOCProvider = (props: TypeWithHOCProviderProps) => {
         return key && !utils.isEmpty(key) ? utils.getValue(data.root, key) : { ...data.root };
     }, [ data ]);
     const setData = useCallback((newData: any) => {
-        const updateData = {
-            root: {
-                ...data.root,
-                ...newData
-            }
+        const newSaveData = {
+            ...data.root,
+            ...newData
         };
-        setSrcData(updateData);
+        data.root = newSaveData;
         if(props.localize) {
-            sessionStorage.setItem(localKey, JSON.stringify(updateData.root));
+            sessionStorage.setItem(localKey, JSON.stringify(data.root));
         }
     }, [data, props]);
 
@@ -116,7 +114,6 @@ export const withContext = (options?: TypeWithContextOptions) => (ContextWrapper
         const formatMapData = useMemo(() => {
             return mapState || (options?.mapDataToProps && options.mapDataToProps(contextRef.getData(dataKey),contextRef.getData()));
         },[mapState, dataKey, contextRef]);
-        // console.log(formatMapData());
         return (
             <ContextWrapper timestamp={timestamp} {...props} {...mapDispatch} contextData={formatMapData} context={contextRef}/>
         );

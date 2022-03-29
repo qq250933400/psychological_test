@@ -1,0 +1,35 @@
+.identity {
+    $btnWidth: 36vw;
+    display: block;
+    height: 100%;
+    button {
+        display: block;
+        width: $btnWidth;
+        position: absolute;
+        margin: 0 auto;
+        top: 50%;
+        left: 50%;
+        margin-left: -($btnWidth / 2);
+        appearance: none;
+        border: none;
+        background: transparent;
+        img{
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        span {
+            display: block;
+            padding: 5px 10px;
+            background: #DCF4EF;
+            border-radius: 28px;
+            font-size: 1.1rem;
+        }
+    }
+    [class*='student'] {
+        margin-top: -30vh;
+    }
+    [class*='parent'] {
+        margin-top: 5vh;
+    }
+}

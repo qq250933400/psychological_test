@@ -42,7 +42,9 @@ const Description = (props: any) => {
 
 const Page = withFrame({
     title: (opt) => {
-        return opt.contextData?.profile?.title || "心里测试";
+        const identityText = opt.contextData.identity === 1 ? "家长" : "学生";
+        const title = opt.contextData.profile?.title || "心里测试";
+        return [title, "(", identityText, ")"].join("");
     },
     onInit: (opt:any) => {
         if(!opt.contextData?.profile) {

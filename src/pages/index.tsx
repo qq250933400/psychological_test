@@ -7,3 +7,4 @@ export const Description = loadable(()=> import(/* webpackChunkName: "Descriptio
 export const Question = loadable(()=> import(/* webpackChunkName: "Question" */"./Question"));
 export const History = loadable(()=> import(/* webpackChunkName: "History" */"./History"));
 export const Report = loadable(()=> import(/* webpackChunkName: "Report" */"./Report"));
+export const Identity = loadable(()=> import(/** webpackChunkName: "Identity" */"./Identity"));

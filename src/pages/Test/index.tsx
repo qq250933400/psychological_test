@@ -34,10 +34,16 @@ const Test = (props: any) => {
 
 const Page = withFrame({
     title: (opt) => {
-        return opt.contextData.profile?.title || "心里测试";
+        const identityText = opt.contextData.identity === 1 ? "家长" : "学生";
+        const title = opt.contextData.profile?.title || "心里测试";
+        return [title, "(", identityText, ")"].join("");
     },
     onInit: (opt:any) => {
         const contextData = opt.contextData || {};
+        if(utils.isEmpty(opt.contextData?.identity)) {
+            opt.navigateTo("/identity");
+            return;
+        }
         if(!opt.contextData?.profile) {
             opt.navigateTo("/profile");
             return ;
@@ -47,7 +53,8 @@ const Page = withFrame({
         opt.service.send({
             endPoint: "wenjuan.testByCategory",
             data: {
-                categoryId: contextData.profile.id
+                categoryId: contextData.profile.id,
+                identity: opt.contextData?.identity
             }
         }, {
             throwException: true
@@ -87,7 +94,8 @@ export default withContext({
     mapDataToProps: (data, rootData) => {
         return {
             ...data,
-            profile: utils.getValue(rootData, "profile.profile")
+            profile: utils.getValue(rootData, "profile.profile"),
+            identity: rootData.identity?.value
         };
     },
     mapDispatchToProps: (dispatch) => ({

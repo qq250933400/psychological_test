@@ -44,6 +44,10 @@ export default createServiceConfig({
                 exitApp: {
                     url: "/wenjuan/user/logout",
                     method: "POST"
+                },
+                identity: {
+                    url: "/wenjuan/mobile/user/identity",
+                    method: "GET"
                 }
             }
         }

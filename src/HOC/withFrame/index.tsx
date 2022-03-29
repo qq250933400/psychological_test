@@ -17,7 +17,7 @@ type WithFrameLoadingOption = {
     mount?: boolean;
 };
 
-type WithFrameProps = {
+export type WithFrameProps = {
     showLoading(opt: WithFrameLoadingOption):void;
     hideLoading():void;
     setData(newData: any): void;
@@ -31,7 +31,7 @@ type WithFrameOptions = {
     title?: string | WithFrameTitleCallback;
     showLoading?: boolean;
     loadingText?: string;
-    onInit?(opt: WithFrameProps): void;
+    onInit?<T={}>(opt: WithFrameProps & T): void;
     onCancel?(opt: WithFrameProps, props: any): void;
     onRetry?(opt: WithFrameProps, props: any): void;
     onHome?(opt: WithFrameProps, props: any): void;
