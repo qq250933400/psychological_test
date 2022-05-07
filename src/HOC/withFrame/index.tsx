@@ -6,6 +6,8 @@ import UndoOutline from "antd-mobile-icons/es/UndoOutline";
 import LeftOutline from "antd-mobile-icons/es/LeftOutline";
 import { useNavigate, To, NavigateOptions, useLocation } from "react-router-dom";
 import { utils } from "elmer-common";
+import NUTLS from "../../utils";
+const { cn } = NUTLS;
 
 type WithFrameExceptionInfo = {
     title?: string,
@@ -27,10 +29,13 @@ export type WithFrameProps = {
     init(): void;
 };
 
-type WithFrameOptions = {
+export type WithFrameOptions = {
     title?: string | WithFrameTitleCallback;
     showLoading?: boolean;
     loadingText?: string;
+    className?: string;
+    homeIcon?: string;
+    historyIcon?: string;
     onInit?<T={}>(opt: WithFrameProps & T): void;
     onCancel?(opt: WithFrameProps, props: any): void;
     onRetry?(opt: WithFrameProps, props: any): void;
@@ -149,9 +154,9 @@ const withFrame = (options: WithFrameOptions) => {
                 sessionStorage.setItem("location", location.pathname);
             }, [location,props,exProps]);
             return <WithFrameContext.Provider value={contextValues}>
-            <div className={styles.withFramePage}>
+            <div className={cn(styles.withFramePage, options?.className)}>
                 <header>
-                    { !loading.visible && !errInfo.show && <button className={styles.btnHome} onClick={()=> { typeof options.onHome === "function" && options.onHome(apiProps, props) }}/>}
+                    { !loading.visible && !errInfo.show && <button className={cn(styles.btnHome, options.homeIcon)} onClick={()=> { typeof options.onHome === "function" && options.onHome(apiProps, props) }}/>}
                     { !loading.visible && errInfo.show && (
                         <button
                             className={styles.btnCancel}
@@ -164,7 +169,7 @@ const withFrame = (options: WithFrameOptions) => {
                         </button>
                     )}
                     <span>{title || ""}</span>
-                    { !loading.visible && !errInfo.show && <button className={styles.btnHistory} onClick={()=> { typeof options.onHistory === "function" && options.onHistory(apiProps, props) }}/> }
+                    { !loading.visible && !errInfo.show && <button className={cn(styles.btnHistory, options.historyIcon)} onClick={()=> { typeof options.onHistory === "function" && options.onHistory(apiProps, props) }}/> }
                     { !loading.visible && errInfo.show && (
                         <button
                             className={styles.btnRetry}

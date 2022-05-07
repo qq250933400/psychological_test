@@ -1,0 +1,76 @@
+.login {
+    background: #FEC031;
+    min-height: 100vh;
+    >div {
+        padding-top: 1px;
+        padding-bottom: 2rem;
+        .loginCopyRight {
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 4rem;
+            span {
+                display: block;
+                text-align: center;
+                margin-bottom: .6rem;
+            }
+        }
+    }
+}
+.loginTitle {
+    display: block;
+    width: 90vw;
+    margin: 0 auto;
+    margin-top: 5vw;
+}
+
+.loginInputArea,
+[class*="InputFormArea"] {
+    width: 60vw;
+    margin: 0 auto;
+    margin-top: 3rem;
+    [class*="lineInput"] {
+        font-family: 思源黑体;
+        margin-top: .6rem;
+        [class*="lineInputLabel"] {
+            font-size: 1.2rem;
+            color: #3D3D3D;
+        }
+        [class*="lineInputBox"],
+        [class*="verifyCodeInput"] {
+            border-color: #3D3D3D;
+            input, button {
+                color: #3D3D3D;
+            }
+            button:disabled {
+                color: #acacac;
+            }
+        }
+    }
+}
+.loginButton, .testButton {
+    display: block;
+    width: 60vw;
+    height: 2.6rem;
+    border-radius: 1.3rem;
+    margin: 0 auto;
+    margin-top: 3rem;
+    border: 1px solid #000;
+    background: #82DEE8;
+    font-size: 1.2rem;
+    font-family: 思源黑体;
+    text-shadow: 0 4px 10px rgba(0,0,0,.3);
+    &:active {
+        background: #62afb7;
+    }
+    &:disabled {
+        background: #87d7df;
+        border-color: #3D3D3D;
+        opacity: .7;
+    }
+    img {
+        max-width: 100%;
+        max-height: 90%;
+        margin-top: .2rem;
+    }
+}

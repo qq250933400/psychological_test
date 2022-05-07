@@ -1,7 +1,12 @@
 /* eslint-disable import/no-anonymous-default-export */
 import React from "react";
+import loadable from "@loadable/component";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login, Profile, Test, Description, Question, History, Report, Identity } from "../pages";
+
+const LoginFor24 = loadable(()=> import(/** webpackChunkName: "LoginFor24" */"../pages/24/Login"));
+const DescriptionFor24 = loadable(()=> import(/** webpackChunkName: "LoginFor24" */"../pages/24/Description"));
+const TestFor24 = loadable(()=> import(/** webpackChunkName: "TestFor24" */"../pages/24/Test"));
 
 export default (): any=> {
     return (
@@ -15,6 +20,9 @@ export default (): any=> {
                 <Route path="/history" element={<History />}/>
                 <Route path="/report" element={<Report />}/>
                 <Route path="/identity" element={<Identity />} />
+                <Route path="/loginFor24" element={<LoginFor24 />} />
+                <Route path="/testDesc" element={<DescriptionFor24 />} />
+                <Route path="/testFor24" element={<TestFor24 />} />
                 <Route path="/" element={<Identity />}/>
             </Routes>
         </BrowserRouter>

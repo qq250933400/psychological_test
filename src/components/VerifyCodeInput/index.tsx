@@ -55,10 +55,10 @@ const VerifyCodeInput = (props: TypeLineInputProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sendDisabled, timeoutText]);
     return (
-        <div className={utils.cn(styles.lineInput, props.className)}>
+        <div className={utils.cn(styles.lineInput, props.className, "lineInput verifyCode")}>
             <div>
-                <label className={styles.lineInputLabel}>{props.label}</label>
-                <div className={utils.cn(styles.lineInputBox, styles.verifyCodeInput)} >
+                <label className={utils.cn(styles.lineInputLabel, "lineInputLabel")}>{props.label}</label>
+                <div className={utils.cn(styles.lineInputBox, styles.verifyCodeInput, "verifyCodeInput")} >
                     <input defaultValue={props.defaultValue || ""} maxLength={props.maxLength} type={props.type || "text"} onChange={onChange}/>
                     <button {...sendProps} onClick={onSendClick}>{ sendButtonText}</button>
                 </div>

@@ -1,0 +1,21 @@
+.frameFor24 {
+    background: #FEC031;
+    >header {
+        background: #93E0E8;
+        font-family: 思源黑体;
+        font-weight: bold;
+        font-size: 1.2rem;
+        span {
+            color: #3D3D3D;
+        }
+    }
+}
+
+.icon_home {
+    background: url(../../res/24/icon_home.png) no-repeat !important;
+    background-size: cover !important;
+}
+.icon_history {
+    background: url(../../res/24/icon_bookmark.png) no-repeat !important;
+    background-size: cover !important;
+}

@@ -1,5 +1,7 @@
 import React, { ChangeEvent, useCallback } from "react";
 import styles from "../style.module.scss";
+import utils from "../../utils";
+const { cn } = utils;
 
 type TypeLineInputProps = {
     label: string;
@@ -32,10 +34,10 @@ const LineInput = (props: TypeLineInputProps) => {
         }
     }, [props]);
     return (
-        <div className={styles.lineInput}>
+        <div className={cn(styles.lineInput, "lineInput")}>
             <div>
-                <label className={styles.lineInputLabel}>{props.label}</label>
-                <div className={styles.lineInputBox} >
+                <label className={cn(styles.lineInputLabel, "lineInputLabel")}>{props.label}</label>
+                <div className={cn(styles.lineInputBox, "lineInputBox")} >
                     <input defaultValue={props.defaultValue || ""} onKeyDown={onKeydown as any} maxLength={props.maxLength} type={props.type || "text"} onChange={onChange}/>
                 </div>
             </div>
