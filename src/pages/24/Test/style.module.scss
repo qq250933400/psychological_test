@@ -29,9 +29,91 @@
         line-height: 1.6rem;
         text-indent: 2rem;
         color: #3D3D3D;
+        [class*="note"] {
+            font-style: normal;
+            font-size: .9rem;
+            text-indent: 2rem !important;
+            display: block;
+        }
+    }
+    [class*="questionSplitLine"] {
+        border-color: #3C2B10;
+        border-top: none;
+        margin: 2rem 0;
     }
 }
 [class*="LabelAlignRight"] [class*="lineInputLabel"] {
     text-align: right !important;
     flex: 0 0 2.4rem !important;
+}
+
+.questionOfCheckBoxs {
+    $checkboxSize: 16px;
+    display: block;
+    font-family: 思源黑体;
+    * {
+        font-family: 思源黑体;
+    }
+    >h5 {
+        font-size: 1rem;
+        margin: .8rem 0;
+    }
+    >label {
+        display: block;
+        font-size: .9rem;
+        color: #fff;
+    }
+    section {
+        display: block;
+        padding: .8rem 0;
+        label {
+            display: block;
+            position: relative;
+            margin-bottom: .5rem;
+            padding-left: 24px;
+            input[type="checkbox"] {
+                position: absolute;
+                left: -3px;
+                top: 0px;
+                width: $checkboxSize;
+                height: $checkboxSize;
+                z-index: 3;
+                opacity: 0;
+            }
+            input[type="checkbox"]+span::before,
+            input[type="checkbox"]+span::after {
+                content: "";
+                display: block;
+                width: $checkboxSize;
+                height: $checkboxSize;
+                position: absolute;
+                left: 0;
+                top: 4px;
+                box-sizing: border-box;
+                background: #fff;
+                z-index: 2;
+                border: 1px solid #3D3D3D;
+            }
+            input[type="checkbox"]+span::after {
+                display: none;
+                z-index: 3;
+                top: 1px;
+                content: "√";
+                text-align: center;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                transform: scaleY(.8);
+                border-color: transparent;
+                background: transparent;
+                font-size: .8rem;
+            }
+            input[type="checkbox"]:checked+span::after {
+                display: block;
+            }
+            span {
+                display: block;
+                font-size: 1rem;
+                line-height: 1.5rem;
+            }
+        }
+    }
 }
