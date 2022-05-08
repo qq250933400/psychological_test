@@ -59,7 +59,7 @@ export default withFrameFor24({
     }
 })(()=>{
     const storeObj = useStore();
-    const [ activeStep, setActiveStep ] = useState(1);
+    const [ activeStep, setActiveStep ] = useState(6);
     const [ testState ] = useState<TypeTestContext>({
         stepData: StepListData,
         confirmText: "下一步",
@@ -88,7 +88,7 @@ export default withFrameFor24({
             const confirmResult = testState.onConfirm();
             if(utils.isPromise(confirmResult)) {
                 confirmResult.then(() => {
-                    if(testState.stepData.length - 1 > activeStep + 1) {
+                    if(testState.stepData.length > activeStep + 1) {
                         setActiveStep(activeStep + 1);
                     } else {
                         console.log("goto history page");
@@ -106,7 +106,7 @@ export default withFrameFor24({
 
    return (
        <TestContext.Provider value={testState}>
-        <div style={{paddingTop: "1rem"}}>
+        <div style={{paddingTop: "1rem", paddingBottom: "3rem"}}>
             <Steps activeIndex={activeStep}>
                 {
                     testState.stepData.map((step, index) => {
