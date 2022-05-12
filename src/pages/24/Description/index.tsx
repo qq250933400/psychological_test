@@ -16,7 +16,7 @@ const InfoForm = () => {
     const navigateTo = useNavigate();
     const [defaultValue, setDefaultValue] = useState<any>({});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const baseInfo = formObj.get<any>() || {};
+    const baseInfo = formObj.get<any>() || storeObj.get<any>("test24")?.basicInfo || {};
     const nextBtnStatus = useMemo(()=>{
         const btnProps:any = {};
         if(utils.isEmpty(baseInfo.name)) {
@@ -45,22 +45,23 @@ const InfoForm = () => {
     }, [ serviceObj ])
     return (
         <div className={loginStyles.loginInputArea}>
-            <FormItem name="name"><LineInput defaultValue={defaultValue.name} label="姓 名：" /></FormItem>
-            <FormItem name="gender"><LineInput defaultValue={defaultValue.gender} label="性 别：" /></FormItem>
-            <FormItem name="age"><LineInput defaultValue={defaultValue.age} label="年 龄：" type="number" /></FormItem>
-            <FormItem name="school"><LineInput defaultValue={defaultValue.school} label="学 校：" /></FormItem>
-
+            <Form name="basicInfo" initData={defaultValue}>
+                <FormItem name="name"><LineInput defaultValue={defaultValue.name} label="姓 名：" /></FormItem>
+                <FormItem name="gender"><LineInput defaultValue={defaultValue.gender} label="性 别：" /></FormItem>
+                <FormItem name="age"><LineInput defaultValue={defaultValue.age} label="年 龄：" type="number" /></FormItem>
+                <FormItem name="school"><LineInput defaultValue={defaultValue.school} label="学 校：" /></FormItem>
+            </Form>
         <button {...nextBtnStatus} className={loginStyles.loginButton} type="button" onClick={()=>{
+            const formData = formObj.get(undefined, "basicInfo");
             storeObj.save("test24", {
-                basicInfo: formObj.get()
+                basicInfo: formData
             });
             serviceObj.send({
                 endPoint: "wenjuan.updateBasicInfo",
-                data: formObj.get()
+                data: formData
             }).then(() => {
                 navigateTo("/testFor24");
             }).catch((err) => console.error(err));
-            
         }}>
             下一步
         </button>
@@ -81,8 +82,6 @@ export default withFrameFor24({
             <p>本测验量表将帮助你发现和确定自己的职业兴趣和能力特长，从而更好地做出求职择业的决策。如果你已经考虑好或选择好了自己的职业，本测验将拓展你的视野，向你展示其他可能合适的职业；如果你至今尚未确定职业方向，本测验将帮助你根据自己的情况选择一些恰当的职业目标。</p>
             <p>本测验共有七个部分，每部分测验都没有时间限制，但请你尽快按要求完成。</p>
         </div>
-        <Form>
-            <InfoForm />
-        </Form>
+        <InfoForm />
     </div>
 });

@@ -25,7 +25,7 @@ const Login = (props: any) => {
         }).then((resp:any) => {
             const token = resp.data.token;
             sessionStorage.setItem("token", token);
-            navigation("/profile");
+            navigation("/testDesc");
         });
     }, [navigation, service, userName, verifyCode]);
     const onBeforeSendClick = useCallback(() => {

@@ -1,11 +1,13 @@
 import React, { useState, useCallback } from "react";
 import { useContext } from "react";
 import { utils } from "elmer-common";
+import { useEffect } from "react";
 
 type TypeFormProps = {
     children: any;
     className?: string;
     name?: string;
+    initData?: any;
     onSubmit?: Function;
     url?: string;
     method?: "GET" | "POST" | "PUT";
@@ -46,7 +48,7 @@ const formStore: any = {};
 export const useForm = () => useContext(FormContext);
 
 export const Form = (props: TypeFormProps) => {
-    const [frmContext, setFrmContext] = useState<any>({});
+    const [frmContext, setFrmContext] = useState<any>(props.initData || {});
     const save = useCallback((name: string, value: any) => {
         const newState = { ...frmContext };
         newState[name] = value;
@@ -71,6 +73,11 @@ export const Form = (props: TypeFormProps) => {
     const submit = useCallback(() => {
         typeof props.onSubmit === "function" && props.onSubmit(frmContext)
     },[props, frmContext]);
+    useEffect(()=>{
+        if(props.name && !utils.isEmpty(props.name) && props.initData) {
+            (formStore as any)[props.name] = props.initData
+        }
+    },[props.initData, props.name]);
     return (
         <FormContext.Provider value={{
             state: frmContext,

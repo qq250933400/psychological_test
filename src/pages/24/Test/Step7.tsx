@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { withStep } from "./Context";
 import withService, { TypeWithServiceApi } from "@HOC/withService";
 import { TestResultTable, useTotalScore } from "./Step7Com";
+import { useNavigate } from "react-router-dom";
 
 type TestType = "R型" | "I型" | "A型" | "S型" | "E型" | "C型";
 type TestScore = { type: TestType, score: number };
@@ -20,6 +21,7 @@ export const Step7 = withService()(
             const service: TypeWithServiceApi = (props as any).service;
             const totalScoreData = useTotalScore();
             const storeObj = useStore();
+            const navigateTo = useNavigate();
             const [ listScoreData ] = useState<TestScore[]>(() => {
                 const sortObj = new SortHelper();
                 const newListData = [...totalScoreData.listData];
@@ -104,15 +106,15 @@ export const Step7 = withService()(
                         data: submitData
                     }).then((resp) => {
                         api.hideLoading();
-                        console.log(resp);
+                        storeObj.remove("test24");
+                        navigateTo("/historyFor24");
                     }).catch((err) => {
                         api.hideLoading();
                         console.error(err);
                     });
-                    console.log(submitData);
                     return Promise.reject();
                 }) as any
-            },[api,service, storeObj, totalScoreData,inputOcupation, ocupationResult, maxScoreType, minScoreType, listScoreData]);
+            },[api,service,navigateTo, storeObj, totalScoreData,inputOcupation, ocupationResult, maxScoreType, minScoreType, listScoreData]);
             return <div>
                 <h5 className={style.subTitle}>第2部分—第5部分的全部测验分数</h5>
                 <TestResultTable />
