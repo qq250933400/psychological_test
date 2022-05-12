@@ -126,15 +126,15 @@ type TypeQAValidate = {
 };
 const QAValidateSchema: any = {
     type: "Object",
-    isRequired: true,
+    isRequired: false,
     properties: {
         name: {
             type: "String",
-            isRequired: true
+            isRequired: false
         },
         options: {
             type: "Object",
-            isRequired: true
+            isRequired: false
         }
     }
 };
