@@ -1,6 +1,7 @@
 import { useStore } from "@components/DataStore";
 import { Steps, Step } from "@components/Steps";
 import React from "react";
+import { Dialog } from "antd-mobile";
 import { utils } from "elmer-common";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -55,11 +56,22 @@ const StepListData:TypeStepInfo[] = [
 export default withFrameFor24({
     title: "我适合做什么职业",
     onHome: (opt) => {
-        opt.navigateTo("/testDesc");
+        Dialog.confirm({
+            title: "询问",
+            content: "返回首页填写内容将丢失，确定返回首页？",
+            onConfirm: () => opt.navigateTo("/testDesc")
+        });
+    },
+    onHistory: (opt) => {
+        Dialog.confirm({
+            title: "询问",
+            content: "跳转到测试结果页面填写内容将丢失？",
+            onConfirm: () => opt.navigateTo("/historyFor24")
+        });
     }
-})(()=>{
+})((props: any)=>{
     const storeObj = useStore();
-    const [ activeStep, setActiveStep ] = useState(6);
+    const [ activeStep, setActiveStep ] = useState(1);
     const [ testState ] = useState<TypeTestContext>({
         stepData: StepListData,
         confirmText: "下一步",
@@ -81,14 +93,16 @@ export default withFrameFor24({
         onConfirm(fn: Function) {
             testState.onConfirm = fn;
             return () => testState.onConfirm = () => {};
-        }
+        },
+        showLoading: props.showLoading,
+        hideLoading: props.hideLoading
     });
     const onSubmitNext = useCallback(()=>{
         if(typeof testState.onConfirm === "function") {
             const confirmResult = testState.onConfirm();
             if(utils.isPromise(confirmResult)) {
                 confirmResult.then(() => {
-                    if(testState.stepData.length > activeStep + 1) {
+                    if(testState.stepData.length >= activeStep + 1) {
                         setActiveStep(activeStep + 1);
                     } else {
                         console.log("goto history page");
@@ -100,7 +114,7 @@ export default withFrameFor24({
     },[activeStep, testState]);
     useEffect(()=>{
         if(!basicInfo) {
-            // navigateTo("/testDesc");
+            navigateTo("/testDesc");
         }
     },[basicInfo, navigateTo]);
 

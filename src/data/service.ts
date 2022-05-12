@@ -48,6 +48,26 @@ export default createServiceConfig({
                 identity: {
                     url: "/wenjuan/mobile/user/identity",
                     method: "GET"
+                },
+                submitTestFor24: {
+                    url: "/wenjuan/mobile/test/submit24",
+                    method: "POST"
+                },
+                historyFor24: {
+                    url: "/wenjuan/mobile/test/history24",
+                    method: "POST"
+                },
+                reportFor24: {
+                    url: "/wenjuan/mobile/user/report24",
+                    method: "POST"
+                },
+                getBasicInfo: {
+                    url: "/wenjuan/user/basic/info",
+                    method: "GET"
+                },
+                updateBasicInfo: {
+                    url: "/wenjuan/user/update/basicInfo",
+                    method: "POST"
                 }
             }
         }

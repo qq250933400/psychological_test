@@ -6,6 +6,7 @@ type TypeWithFrameFor24 = {[P in TypeWithFrameKeys]?: WithFrameOptions[P]};
 
 export const withFrameFor24 = (options: TypeWithFrameFor24) => {
     return withFrame({
+        onHistory: (opt) => opt.navigateTo("/historyFor24"),
         ...options,
         className: style.frameFor24,
         homeIcon: style.icon_home,

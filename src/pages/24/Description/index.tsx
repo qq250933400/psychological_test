@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect,useState } from "react";
 import { utils } from "elmer-common";
 import { withFrameFor24 } from "../withFrame";
 import LineInput from "../../../components/LineInput";
@@ -8,11 +8,13 @@ import style from "./style.module.scss";
 import loginStyles from "../Login/style.module.scss";
 import { useStore } from "@components/DataStore";
 import { useNavigate } from "react-router-dom";
+import { useService } from "@HOC/withService";
 
 const InfoForm = () => {
     const formObj = useForm();
     const storeObj = useStore();
     const navigateTo = useNavigate();
+    const [defaultValue, setDefaultValue] = useState<any>({});
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const baseInfo = formObj.get<any>() || {};
     const nextBtnStatus = useMemo(()=>{
@@ -31,19 +33,34 @@ const InfoForm = () => {
         }
         return btnProps;
     }, [baseInfo]);
-
+    const serviceObj = useService({
+        navigateTo: () => { navigateTo("/loginFor24") }
+    });
+    useEffect(() => {
+        serviceObj.send({
+            endPoint: "wenjuan.getBasicInfo"
+        }).then((resp:any) => {
+            setDefaultValue(resp.data || {});
+        }).catch((err) => console.error(err));
+    }, [ serviceObj ])
     return (
         <div className={loginStyles.loginInputArea}>
-            <FormItem name="name"><LineInput label="姓 名：" /></FormItem>
-            <FormItem name="gender"><LineInput label="性 别：" /></FormItem>
-            <FormItem name="age"><LineInput label="年 龄：" type="number" /></FormItem>
-            <FormItem name="school"><LineInput label="学 校：" /></FormItem>
+            <FormItem name="name"><LineInput defaultValue={defaultValue.name} label="姓 名：" /></FormItem>
+            <FormItem name="gender"><LineInput defaultValue={defaultValue.gender} label="性 别：" /></FormItem>
+            <FormItem name="age"><LineInput defaultValue={defaultValue.age} label="年 龄：" type="number" /></FormItem>
+            <FormItem name="school"><LineInput defaultValue={defaultValue.school} label="学 校：" /></FormItem>
 
         <button {...nextBtnStatus} className={loginStyles.loginButton} type="button" onClick={()=>{
             storeObj.save("test24", {
                 basicInfo: formObj.get()
             });
-            navigateTo("/testFor24");
+            serviceObj.send({
+                endPoint: "wenjuan.updateBasicInfo",
+                data: formObj.get()
+            }).then(() => {
+                navigateTo("/testFor24");
+            }).catch((err) => console.error(err));
+            
         }}>
             下一步
         </button>

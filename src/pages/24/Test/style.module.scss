@@ -184,3 +184,107 @@
         }
     }
 }
+[class*="TestSummeryHeader"] tr td {
+    font-weight: bold;
+}
+.step6Input {
+    display: block;
+    background: rgba(255, 255, 255, 0.53);
+    padding: 2rem;
+    padding-top: 1rem;
+    border-radius: 2rem;
+    border: 1px solid #3D3D3D;
+    [class*="InputFormArea"] {
+        margin: 0 !important;
+        width: 100%;
+        display: flex;
+        >div {
+            flex: 0 0 50%;
+            box-sizing: border-box;
+            padding-right: .6rem;
+            >div:first-child{
+                margin-top: 0 !important;
+            }
+            [class*="lineInputLabel"] {
+                font-size: .8rem !important;
+                width: 78px !important;
+                margin-top: 0rem !important;
+                line-height: 3.6rem !important;
+            }
+            input[type="text"] {
+                font-size: .8rem !important;
+                margin-top: 0 !important;
+            }
+        }
+    }
+}
+.subTitle {
+    margin-top: 0;
+    text-align: center;
+    font-weight: normal;
+    font-size: 1rem;
+}
+
+.scoreTypeList,
+.scoreTypeList li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.scoreTypeList {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    width: 100%;
+    font-size: 0;
+    li {
+        flex: 0 0 2.6rem;
+        width: 2.6rem;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1rem;
+    }
+}
+.finalScore {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    span {
+        flex: 0 0 50%;
+        i {
+            font-style: normal;
+            padding: 0 .5rem;
+            text-decoration: underline;
+        }
+    }
+    span:last-child {
+        text-align: right;
+    }
+}
+.ocupationResult {
+    border: 1px solid #3D3D3D;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
+    margin-top: 1rem;
+    *{
+        font-family: 思源黑体;
+    }
+    >h3:first-child {
+        margin-top: 0;
+    }
+    label {
+        line-height: 1.6rem;
+        i {
+            font-style: normal;
+            color:#20C7E5;
+        }
+    }
+}
+[class*="lastStepTip"] {
+    font-weight: bold;
+    line-height: 1.6rem;
+    margin-top: 2rem;
+    p {
+        font-size: .8rem;
+    }
+}

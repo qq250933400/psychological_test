@@ -7,6 +7,8 @@ import { Login, Profile, Test, Description, Question, History, Report, Identity 
 const LoginFor24 = loadable(()=> import(/** webpackChunkName: "LoginFor24" */"../pages/24/Login"));
 const DescriptionFor24 = loadable(()=> import(/** webpackChunkName: "LoginFor24" */"../pages/24/Description"));
 const TestFor24 = loadable(()=> import(/** webpackChunkName: "TestFor24" */"../pages/24/Test"));
+const HistoryFor24 = loadable(()=> import(/** webpackChunkName: "TestFor24" */"../pages/24/History"));
+const ReportFor24 = loadable(()=> import(/** webpackChunkName: "TestFor24" */"../pages/24/Report"));
 
 export default (): any=> {
     return (
@@ -23,6 +25,8 @@ export default (): any=> {
                 <Route path="/loginFor24" element={<LoginFor24 />} />
                 <Route path="/testDesc" element={<DescriptionFor24 />} />
                 <Route path="/testFor24" element={<TestFor24 />} />
+                <Route path="/historyFor24" element={<HistoryFor24 />} />
+                <Route path="/reportFor24" element={<ReportFor24 />} />
                 <Route path="/" element={<Identity />}/>
             </Routes>
         </BrowserRouter>
