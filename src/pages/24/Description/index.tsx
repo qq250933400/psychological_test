@@ -40,9 +40,13 @@ const InfoForm = () => {
         serviceObj.send({
             endPoint: "wenjuan.getBasicInfo"
         }).then((resp:any) => {
+            storeObj.save("test24", {
+                basicInfo: resp.data || {}
+            });
             setDefaultValue(resp.data || {});
         }).catch((err) => console.error(err));
-    }, [ serviceObj ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     return (
         <div className={loginStyles.loginInputArea}>
             <Form name="basicInfo" initData={defaultValue}>

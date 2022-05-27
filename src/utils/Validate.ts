@@ -60,7 +60,7 @@ const validateByValue = <T={}, ValidateCallbacks={}>(value: any, validateSchema:
                 vResult.pass = false;
                 vResult.message = vSchema.requireMsg;
             }
-            if(vResult.pass && !utils.isObject(checkValue)) {
+            if(vResult.pass && (!utils.isObject(checkValue) && null !== checkValue && undefined !== checkValue)) {
                 vResult.pass = false;
                 vResult.message = vSchema.valiateMsg;
             }
@@ -76,12 +76,16 @@ const validateByValue = <T={}, ValidateCallbacks={}>(value: any, validateSchema:
         }
         if(vResult.pass) {
             if(
-                (vSchema.type === "String" && !utils.isString(checkValue)) ||
-                (vSchema.type === "Number" && !utils.isNumeric(checkValue)) ||
-                (vSchema.type === "Boolean" && !utils.isBoolean(checkValue)) ||
-                (vSchema.type === "Array" && !utils.isArray(checkValue)) ||
-                (utils.isArray(vSchema.type) && vSchema.type.indexOf(checkValue) < 0) ||
-                (utils.isRegExp(vSchema.type) && !vSchema.type.test(checkValue))
+                (
+                    (vSchema.type === "String" && !utils.isString(checkValue)) ||
+                    (vSchema.type === "Number" && !utils.isNumeric(checkValue)) ||
+                    (vSchema.type === "Boolean" && !utils.isBoolean(checkValue)) ||
+                    (vSchema.type === "Array" && !utils.isArray(checkValue)) ||
+                    (utils.isArray(vSchema.type) && vSchema.type.indexOf(checkValue) < 0) ||
+                    (utils.isRegExp(vSchema.type) && !vSchema.type.test(checkValue))
+                ) &&
+                null === checkValue &&
+                undefined === checkValue
             ) {
                 vResult.pass = false;
                 vResult.message = vSchema.valiateMsg;
