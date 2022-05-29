@@ -106,3 +106,13 @@ $sectionBackGround: #d1ebfe;
         color: rgb(223, 223, 223);
     }
 }
+.questionInput {
+    display:block;
+    padding-bottom: .8rem;
+    [class*="adm-input-wrapper"] {
+        display: inline-block;
+        width: 40px !important;
+        border-bottom: 1px solid #0f0f0f;
+        padding: 0 4px;
+    }
+}

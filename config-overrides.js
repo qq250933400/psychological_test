@@ -22,6 +22,16 @@ module.exports = function override(config, env) {
                 "@components": path.resolve(process.cwd(), "./src/components"),
                 "@components/*": path.resolve(process.cwd(), "./src/components/*"),
             }
+        },
+        module: {
+            ...config.module,
+            rules: [
+                ...config.module.rules,
+                {
+                    test: /\.map$/,
+                    loader: "url-loader"
+                }
+            ]
         }
     };
 };
