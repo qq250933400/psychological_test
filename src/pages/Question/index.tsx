@@ -77,10 +77,11 @@ const QuestionDetail = (props: TypeQuestionDetailProps) => {
                 </ul>)
             }
             {
-                data.type === "RadioGroup" && <QARadioGroup name="ADGroup" onChange={(data:any) => {
+                data.type === "RadioGroup" && <QARadioGroup name="RadioGroup" onChange={(data:any) => {
                     props.onChange({
                         index,
-                        data
+                        data,
+                        type: "RadioGroup"
                     });
                 }}/>
             }
@@ -125,7 +126,7 @@ const Question = (props: any) => {
                 type: item.type || detail.type,
                 questionId: item.questionId,
                 answerId: item.id,
-                value: item.value
+                value: item.value || item.data
             });
         }
         service.send({
@@ -147,8 +148,9 @@ const Question = (props: any) => {
         });
     },[detail, answerList, service, props]);
     const nextProps = useMemo(()=>{
-        if(answerList[currentIndex]) {
-            return {};
+        const anws:any = answerList[currentIndex];
+        if(anws) {
+            return anws.name === "RadioGroup" ? (!anws.valide ? { disabled: true } : {}) : {};
         } else {
             return { disabled: true };
         }
@@ -173,8 +175,8 @@ const Question = (props: any) => {
                         {
                             currentQuestion && <QuestionDetail onChange={onChange} data={currentQuestion} index={currentIndex} total={total}/>
                         }
-                        { answerList.length < total && <button onClick={onNext} className={styles.btnNext} {...nextProps}>下一题</button> }
-                        { answerList.length === total && <button onClick={onSubmit} className={styles.btnNext}>提交并查看测试结果</button> }
+                        { currentIndex + 1 < total && <button onClick={onNext} className={styles.btnNext} {...nextProps}>下一题</button> }
+                        { currentIndex + 1 === total && <button onClick={onSubmit} className={styles.btnNext} {...nextProps}>提交并查看测试结果</button> }
                     </>
                 )
             }
