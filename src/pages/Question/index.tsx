@@ -80,7 +80,10 @@ const QuestionDetail = (props: TypeQuestionDetailProps) => {
                 data.type === "RadioGroup" && <QARadioGroup name="RadioGroup" onChange={(data:any) => {
                     props.onChange({
                         index,
-                        data,
+                        data: {
+                            ...data,
+                            type: "RadioGroup"
+                        },
                         type: "RadioGroup"
                     });
                 }}/>
