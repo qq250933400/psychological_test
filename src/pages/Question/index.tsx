@@ -6,126 +6,17 @@ import withContext from "../../HOC/withContext";
 import withService, { TypeService } from "../../HOC/withService";
 import styles from "./style.module.scss";
 import Radio from "antd-mobile/es/components/radio";
-import Input from "antd-mobile/es/components/input";
+import { QuestionTitle } from "./QATitle";
+import { QuestionItem } from "./QARadioItem";
+import { QARadioGroup } from "./QARadioGroup";
 
-type TypeQuestionItemProps = {
-    data: {
-        title: string;
-        id: number;
-        questionId: number;
-    };
-    type?: "radio" | "checkbox" | "input",
-    onClick: Function;
-    index: number;
-};
 type TypeQuestionDetailProps = {
     index: number;
     total: number;
     data: any;
     onChange: Function;
 }
-type TypeQuestionTitleProps = {
-    title: string;
-    type: "input"|"radio"|"checkbox";
-    onChange: Function;
-};
 
-const QuestionItem = (props: TypeQuestionItemProps) => {
-    const [ type, setType ] = useState(props.type || "radio");
-    const [ index, setIndex ] = useState(props.index);
-    const [ data, setData ] = useState(props.data);
-    useEffect(()=>{
-        setType(props.type || "radio");
-        setIndex(props.index);
-        setData(props.data);
-    }, [props.type, props.index, props.data]);
-    return (
-        <li className={type} onClick={() => { props.onClick({
-            index,
-            data
-        })}}>
-            {
-                type === "radio" && (
-                    <label>
-                        <Radio value={data.id as any} id={data.id as any}/>
-                        <span>{data.title}</span>
-                    </label>
-                )
-            }
-        </li>
-    );
-};
-const QuestionTitle = (props: TypeQuestionTitleProps) => {
-    const [ title ] = useState(props.title);
-    const [ inputData, setInputData ] = useState<any>({});
-    const inputNodes = useMemo(() => {
-        const nodes: any[] = [];
-        const text = props.title || "";
-        const inputKeys: string[] = [];
-        let matchs = text.match(/\$\{\s*[a-z0-9_\-.]{1,}\s*\}/ig);
-        if(matchs && matchs.length > 0) {
-            let matchStartIndex = 0;
-            matchs.forEach((item: string) => {
-                const name = item.replace(/^\$\{/,"").replace(/\}$/,"");
-                const startIndex = text.indexOf(item);
-                const endIndex = startIndex + item.length;
-                const prevText = text.substring(matchStartIndex, startIndex);
-                nodes.push({
-                    type: "text",
-                    value: prevText
-                });
-                nodes.push({
-                    type: "input",
-                    name,
-                    value: inputData[name] || {}
-                });
-                inputKeys.push(name);
-                matchStartIndex = endIndex;
-            });
-            if(matchStartIndex < text.length) {
-                nodes.push({
-                    type: "text",
-                    value: text.substring(matchStartIndex)
-                });
-            }
-        } else {
-            nodes.push({
-                type: "text",
-                value: text
-            });
-        }
-        return {
-            nodes,
-            inputKeys
-        };
-    }, [props.title, inputData]);
-    const onInputChange = useCallback((name: string, value: string) => {
-        const newData = { ...inputData };
-        const inputKeys = inputNodes.inputKeys || [];
-        const questionData:any = {};
-        newData[name] = value;
-        inputKeys.forEach((vname) => {
-            questionData[vname] = newData[vname];
-        });
-        setInputData(newData);
-        props.onChange(questionData);
-    }, [inputData, props, inputNodes.inputKeys]);
-    if(props.type === "input") {
-        return <div className={styles.questionInput}>
-            {
-                inputNodes.nodes.map((node, index):any => {
-                    if(node.type === "text") {
-                        return <span key={`node_${index}`}>{node.value}</span>
-                    } else {
-                        return <Input key={`node_${index}`} value={node.value} type="number" id={node.name} onChange={(value) => onInputChange(node.name, value)}/>
-                    }
-                })
-            }
-        </div>
-    } else {
-        return <span>{title}</span>
-    }
-}; 
 const formatIndex = (index: number, maxNumber: number) => {
     const maxLen = maxNumber.toString().length;
     const indexLen = index.toString().length;
@@ -175,7 +66,7 @@ const QuestionDetail = (props: TypeQuestionDetailProps) => {
                 </b>
             </h6>
             {
-                data.type !== "input" && (<ul>
+                data.type === "radio" && (<ul>
                     <Radio.Group value={(selectedItem as any)?.value}>
                         {
                             data.items.map((item: any, indexKey: number) => {
@@ -184,6 +75,14 @@ const QuestionDetail = (props: TypeQuestionDetailProps) => {
                         }
                     </Radio.Group>
                 </ul>)
+            }
+            {
+                data.type === "RadioGroup" && <QARadioGroup name="ADGroup" onChange={(data:any) => {
+                    props.onChange({
+                        index,
+                        data
+                    });
+                }}/>
             }
         </div>
     )

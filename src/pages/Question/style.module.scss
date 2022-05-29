@@ -68,20 +68,6 @@ $sectionBackGround: #d1ebfe;
             li {
                 margin-top: .8rem;
             }
-            [class*="radio"]>label {
-                display: block;
-                padding-left: 2rem;
-                position: relative;
-                >label {
-                    position: absolute;
-                    left: 0;
-                    top: -.1rem;
-                }
-                span {
-                    font-size: 1rem;
-                    color:#121212;
-                }
-            }
         }
     }
 }
@@ -114,5 +100,16 @@ $sectionBackGround: #d1ebfe;
         width: 40px !important;
         border-bottom: 1px solid #0f0f0f;
         padding: 0 4px;
+    }
+}
+.radioGroupQA {
+    background: #fff !important;
+    padding: 0 1rem;
+    padding-top: 1.5rem;
+    >label {
+        background: #fff !important;
+        font-size: .9rem;
+        display: block;
+        padding: 0 .5rem;
     }
 }
