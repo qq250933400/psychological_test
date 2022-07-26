@@ -16,7 +16,7 @@ const InfoForm = () => {
     const navigateTo = useNavigate();
     const [defaultValue, setDefaultValue] = useState<any>({});
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    const baseInfo = formObj.get<any>() || storeObj.get<any>("test24")?.basicInfo || {};
+    const [ baseInfo, setBaseInfo] = useState(formObj.get<any>() || storeObj.get<any>("test24")?.basicInfo || defaultValue || {});
     const nextBtnStatus = useMemo(()=>{
         const btnProps:any = {};
         if(utils.isEmpty(baseInfo.name)) {
@@ -44,12 +44,15 @@ const InfoForm = () => {
                 basicInfo: resp.data || {}
             });
             setDefaultValue(resp.data || {});
+            setBaseInfo(resp.data);
         }).catch((err) => console.error(err));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
     return (
         <div className={loginStyles.loginInputArea}>
-            <Form name="basicInfo" initData={defaultValue}>
+            <Form name="basicInfo" initData={defaultValue} onChange={(data: any) => {
+                setBaseInfo(data);
+            }}>
                 <FormItem name="name"><LineInput defaultValue={defaultValue.name} label="姓 名：" /></FormItem>
                 <FormItem name="gender"><LineInput defaultValue={defaultValue.gender} label="性 别：" /></FormItem>
                 <FormItem name="age"><LineInput defaultValue={defaultValue.age} label="年 龄：" type="number" /></FormItem>

@@ -11,6 +11,7 @@ type TypeFormProps = {
     onSubmit?: Function;
     url?: string;
     method?: "GET" | "POST" | "PUT";
+    onChange?: Function;
 };
 
 type TypeFormItemProps = {
@@ -52,8 +53,9 @@ export const Form = (props: TypeFormProps) => {
     const save = useCallback((name: string, value: any) => {
         const newState = { ...frmContext };
         newState[name] = value;
+        typeof props.onChange === "function" && props.onChange(newState);
         setFrmContext(newState);
-    }, [frmContext]);
+    }, [frmContext, props]);
     const getValue = useCallback(<T extends {}>(name?: string, formName?: string):T => {
         if(formName && !utils.isEmpty(formName) && formStore[formName]) {
             const srcFormData: any = formStore[formName];
@@ -76,6 +78,7 @@ export const Form = (props: TypeFormProps) => {
     useEffect(()=>{
         if(props.name && !utils.isEmpty(props.name) && props.initData) {
             (formStore as any)[props.name] = props.initData
+            setFrmContext(props.initData);
         }
     },[props.initData, props.name]);
     return (
@@ -83,7 +86,7 @@ export const Form = (props: TypeFormProps) => {
             state: frmContext,
             name: props.name,
             save,
-            get: getValue,
+            get: getValue as any,
             submit
         }}>
             <form className={props.className} name={props.name} method={props.method} action={props.url} onSubmit={(evt) => {

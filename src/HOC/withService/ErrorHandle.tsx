@@ -20,17 +20,22 @@ export const commonHandler = (respData:any, errorResponse?: boolean, opt?: TypeC
     const resp = respData.data || respData;
     if(resp.statusCode !== 200) {
         if(!isEmpty(resp.statusCode)) {
+            const unLoginHandle = sessionStorage.getItem("unLoginHandle");
             let msg = resp.message || resp.info || resp.statusText || "请求失败";
-            msg = `${msg} (${resp.statusCode})`
-            !opt?.throwException && Toast.show({
-                content: msg,
-                icon: "fail",
-                position: "center"
-            });
-            opt?.throwException && typeof opt.onError === "function" && opt.onError({
-                statusCode: resp.statusCode,
-                message: msg
-            });
+                msg = `${msg} (${resp.statusCode})`
+            if(unLoginHandle === "1") {
+                !opt?.throwException && Toast.show({
+                    content: msg,
+                    icon: "fail",
+                    position: "center"
+                });
+                opt?.throwException && typeof opt.onError === "function" && opt.onError({
+                    statusCode: resp.statusCode,
+                    message: msg
+                });
+            } else {
+                sessionStorage.setItem("unLoginHandle", "1");
+            }
             if(opt) {
                 opt.returnValue = {
                     statusCode: resp.statusCode,
