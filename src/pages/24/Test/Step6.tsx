@@ -60,7 +60,7 @@ export const Step6 = withStep()(({ api }) => {
     },[api, validateObj, storeObj, formObj]);
     return <div>
         <section className="Context">
-            <p>这一部分测验列出了人们在选择工作时通常会考虑的9要素(见所附工作价值标准)。观在请你在其中选出对你最重要二项因素，以及最不重要的二项因素，并将序号填人下边相应空格上。</p>
+            <p>这一部分测验列出了人们在选择工作时通常会考虑的9要素(见所附工作价值标准)。现在请你在其中选出对你最重要二项因素，以及最不重要的二项因素，并将序号填人下边相应空格上。</p>
         </section>
         <div className={styles.step6Input}>
             <Form name="import" className="InputFormArea">
