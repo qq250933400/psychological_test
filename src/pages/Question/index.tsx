@@ -9,11 +9,13 @@ import Radio from "antd-mobile/es/components/radio";
 import { QuestionTitle } from "./QATitle";
 import { QuestionItem } from "./QARadioItem";
 import { QARadioGroup } from "./QARadioGroup";
+import { identity, cn } from "@/utils";
 
 type TypeQuestionDetailProps = {
     index: number;
     total: number;
     data: any;
+    selectedValue?: any;
     onChange: Function;
 }
 
@@ -27,7 +29,7 @@ const QuestionDetail = (props: TypeQuestionDetailProps) => {
     const [ index, setIndex ] = useState(props.index);
     const [ total, setTotal ] = useState(props.total);
     const [ data, setData ] = useState(props.data || {});
-    const [ selectedItem, setSelectedItem ] = useState();
+    const [ selectedItem, setSelectedItem ] = useState(props.selectedValue);
     const onItemClick = useCallback((v) => {
         const testData = {
             questionId: data.id,
@@ -49,6 +51,9 @@ const QuestionDetail = (props: TypeQuestionDetailProps) => {
         setData(props.data);
         setSelectedItem(undefined);
     },[props.index, props.total, props.data]);
+    useEffect(() => {
+        setSelectedItem(props.selectedValue);
+    }, [props.selectedValue]);
     return (
         <div className={styles.detail}>
             <h6>
@@ -67,7 +72,7 @@ const QuestionDetail = (props: TypeQuestionDetailProps) => {
             </h6>
             {
                 data.type === "radio" && (<ul>
-                    <Radio.Group value={(selectedItem as any)?.value}>
+                    <Radio.Group value={(selectedItem as any)?.value || []}>
                         {
                             data.items.map((item: any, indexKey: number) => {
                                 return <QuestionItem onClick={onItemClick} index={index} key={indexKey} data={item}/>;
@@ -102,9 +107,15 @@ const Question = (props: any) => {
     const currentQuestion = useMemo(() => {
         return detail ? detail.items[currentIndex] : {};
     }, [currentIndex, detail]);
+    const selectedValue = useMemo(() => answerList[currentIndex], [ currentIndex, answerList]);
     const total = useMemo(() => {
         return detail ? detail.items.length : 0;
     }, [detail]);
+    const onPrev = useCallback(() => {
+        if(currentIndex - 1 >= 0) {
+            setCurrentIndex(currentIndex - 1);
+        }
+    }, [ currentIndex ]);
     const onNext = useCallback(() => {
         if(currentIndex + 1 < total) {
             setCurrentIndex(currentIndex + 1);
@@ -177,8 +188,9 @@ const Question = (props: any) => {
                             <label className={styles.header_count}><span>本问卷一共{detail.items.length}题，目前在第<b>{currentIndex + 1}</b>题.</span></label>
                         </div>
                         {
-                            currentQuestion && <QuestionDetail onChange={onChange} data={currentQuestion} index={currentIndex} total={total}/>
+                            currentQuestion && <QuestionDetail selectedValue={selectedValue} onChange={onChange} data={currentQuestion} index={currentIndex} total={total}/>
                         }
+                        { currentIndex > 0 && <button onClick={onPrev} className={cn(styles.btnNext,styles.btnBack)}>上一题</button> }
                         { currentIndex + 1 < total && <button onClick={onNext} className={styles.btnNext} {...nextProps}>下一题</button> }
                         { currentIndex + 1 === total && <button onClick={onSubmit} className={styles.btnNext} {...nextProps}>提交并查看测试结果</button> }
                     </>
@@ -190,7 +202,7 @@ const Question = (props: any) => {
 
 const Page = withFrame({
     title: (opt) => {
-        const identityText = opt.contextData.identity === 1 ? "家长" : "学生";
+        const identityText = identity();
         const title = opt.contextData.profile?.title || "心里测试";
         return [title, "(", identityText, ")"].join("");
     },

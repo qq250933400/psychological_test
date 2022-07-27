@@ -92,6 +92,9 @@ $sectionBackGround: #d1ebfe;
         color: rgb(223, 223, 223);
     }
 }
+.btnBack+button {
+    margin-top: 15px;
+}
 .questionInput {
     display:block;
     padding-bottom: .8rem;

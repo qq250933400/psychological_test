@@ -4,6 +4,7 @@ import withContext from "../../HOC/withContext";
 import { utils } from "elmer-common";
 import withService from "../../HOC/withService";
 import styles from "./style.module.scss";
+import { identity } from "@/utils";
 
 const Description = (props: any) => {
     const [ detail, setDetail ] = useState(props.detail || {});
@@ -42,7 +43,7 @@ const Description = (props: any) => {
 
 const Page = withFrame({
     title: (opt) => {
-        const identityText = opt.contextData.identity === 1 ? "家长" : "学生";
+        const identityText = identity();
         const title = opt.contextData.profile?.title || "心里测试";
         return [title, "(", identityText, ")"].join("");
     },

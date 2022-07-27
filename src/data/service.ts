@@ -4,7 +4,7 @@ export default createServiceConfig({
     env: ENV,
     host: {
         "DEV": "http://localhost/api/public/index.php",
-        "PROD": `http://${host}/proxy`
+        "PROD": `/index.php`
     },
     config: {
         wenjuan: {

@@ -15,6 +15,7 @@ type TypeOnInitProps = {
 const Identity = (props: any) => {
     const naviagteTo = useNavigate();
     const onSaveIdentity = useCallback((identity: number) => {
+        sessionStorage.setItem("identity", identity as any);
         props.setIdentity(identity);
         naviagteTo("/profile");
     }, [props, naviagteTo]);

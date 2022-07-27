@@ -8,6 +8,7 @@ import withContext from "../../HOC/withContext";
 import ImgJunior from "../../res/junior.png";
 import ImgPrimary from "../../res/primary.png";
 import ImgSenior from "../../res/senior.jpg";
+import { identity } from "@/utils";
 
 type TypeProfileInfo = {
     title: string;
@@ -248,7 +249,7 @@ const Profile = (props: any) => {
 
 const withFramePage =  withService()(withFrame({
     title: (opt) => {
-        const identityText = opt.contextData.identity === 1 ? "家长" : "学生";
+        const identityText = identity();
         return ["选择身份", "(", identityText, ")"].join("");
     },
     showLoading: true,

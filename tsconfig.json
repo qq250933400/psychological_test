@@ -26,6 +26,8 @@
       "@HOC/*": ["src/HOC/*"],
       "@components": ["src/components"],
       "@components/*": ["src/components/*"],
+      "@": ["src"],
+      "@/*": ["src/*"]
     }
   },
   "include": [
