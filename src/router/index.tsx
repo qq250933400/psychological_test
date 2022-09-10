@@ -10,7 +10,7 @@ const TestFor24 = loadable(()=> import(/** webpackChunkName: "TestFor24" */"../p
 const HistoryFor24 = loadable(()=> import(/** webpackChunkName: "TestFor24" */"../pages/24/History"));
 const ReportFor24 = loadable(()=> import(/** webpackChunkName: "TestFor24" */"../pages/24/Report"));
 
-export default (): any=> {
+export default (props: any): any=> {
     return (
         <HashRouter>
             <Routes>
@@ -29,6 +29,7 @@ export default (): any=> {
                 <Route path="/reportFor24" element={<ReportFor24 />} />
                 <Route path="/" element={<Identity />}/>
             </Routes>
+            { props.children }
         </HashRouter>
     );
 };

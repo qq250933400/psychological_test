@@ -33,7 +33,8 @@ module.exports = function override(config, env) {
                 {
                     test: /\.map$/,
                     loader: "url-loader"
-                }
+                },
+                { test:/\.css$/,use:['style-loader','css-loader'] }
             ]
         },
         output: {
